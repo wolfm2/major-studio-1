@@ -64,6 +64,15 @@ class ball {  // Definition of ball state and methods
   
 };
 
+function mouseReleased() {
+	padLvl = 370;	// line where paddle starts
+	padWidth = 90;	// width of paddle
+	padHeight = 22;	// height of paddle
+	score = 0;		// obvious
+	balls = [];		// array of ball instances
+	setup();
+}
+
 var maxBalls = 10;
 
 function setup() {
@@ -72,6 +81,7 @@ function setup() {
   strokeWeight(4);
 
   colorMode(HSB);
+  noCursor();
 
   padFill = color(random(360),100,100);
   padStroke = getCompliment(padFill);
@@ -83,7 +93,7 @@ function setup() {
   }
 }
 
-rect_curve = 3
+rect_curve = 5
 
 function draw() {
   background(255);
@@ -95,7 +105,7 @@ function draw() {
 
   fill(padFill);
   stroke(padStroke);
-  rect(mouseX, padLvl, padWidth, padHeight, rect_curve);  // paddle
+  rect(mouseX, padLvl, padWidth, padHeight, 0, 0, rect_curve, rect_curve);  // paddle
 
   // Score
   textAlign(CENTER);
