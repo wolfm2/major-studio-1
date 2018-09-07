@@ -1,223 +1,86 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>UNDP Africa's Solar Future</title>
-
-        <link rel='stylesheet' type='text/css' href='css/jquery.kwicks-2.2.1.css' />
-        <style type='text/css'>
-            .kwicks {
-                width: 700px;
-                height: 400px;
-            }
-            .kwicks > li {
-                height: 400px;
-                /* overridden by kwicks but good for when JavaScript is disabled */
-                width: 600px;
-                margin-left: 5px;
-                float: left;
-            }
-
-            #panel-1 { background-color: #90ee90; }
-            #panel-2 { background-color: #ffe140; }
-            #panel-3 { background-color: #fff760; }
-            
-			html,body {
-				height:100%;
-			}
-			
-			.panel-info {
-				width: 600px; 
-				height: 400px;
-				opacity: 0;
-			}			
-			
-      .panel-icon {
-				margin-top: 100px;
-				width: 60%;
-				max-width: 130px;
-			}
-			
-			.panel-chop {
-				/* display:table-cell; */
-				vertical-align:middle; 
-				text-align:center;
-				width: 100%; 
-				/* height: 100%; */
-				position: absolute;
-				z-index: 1;
-					
-			}
-			
-			.panel-chop, #title-text {
-				font-size: 200%;
-				font-family: Ariel, Helvetica, sans-serif;
-				/* font-family: Verdana, Geneva, sans-serif; */
-			}
-			
-			#title-text {
-				font-size: 60px;
-				font-weight: bold;
-			}
-			
-			.init-img {
-				display: inline-block;
-			}
-			
-			.init-img img {
-				border-radius: 15px;
-				border: 2px solid black;
-				/* padding: 20px; */
-				width: 60px;
-				height: 60px;  
-				
-				-webkit-transform: scale(1);
-				-webkit-filter: 
-				grayscale(1); /* Webkit Nightlies & Chrome Canary */
-        -webkit-transition: all .3s ease-in-out;
-			}
-			
-			.init-img img:hover {
-				-webkit-transform: scale(1.05);
-				-webkit-filter: grayscale(0); 
-			}
-			
-			#init-main-img {
-				width: 40%;
-				}
-			#init-main-text {
-				width: 40%;
-				}	
-        </style>
-    </head>
-
-    <body>
-		<div id=title-text>Africa:<br>The Solar Future</div>
-        <ul class='kwicks kwicks-horizontal'>
-            <li id='panel-1'>
-              <div class=panel-chop>
-								<image class=panel-icon src="assets/world.svg"></image>
-								<br>
-								<div class=panel-text>Buildout</div>
-							</div>
-              <div class=panel-info> 
-								<image src="assets/gear.png"></image>
-              </div>
-            </li>
-            <li id='panel-2'>
-              <div class=panel-chop>
-								<image class=panel-icon src="assets/sun1.svg"></image>
-								<br>
-                <div class=panel-text>Capacity</div>
-              </div>
-              <div class=panel-info> 
-								<image src="assets/gear.png"></image>
-              </div>
-            </li>
-            <li id='panel-3'>
-              <div class=panel-chop>
-								<image class=panel-icon src="assets/list.svg"></image>
-								<br>
-                <div class=panel-text>Initiatives</div>
-              </div>
-              <div class=panel-info> 
-								<div class=init-img><image src="assets/squared/irrigation.jpg" title="Solar Irrigation"></image></div>
-								<div class=init-img><image src="assets/squared/lamps.jpg"></image></div>
-								<div class=init-img><image src="assets/squared/kits.jpg"></image></div>
-								<div class=init-img><image src="assets/squared/pumping.jpg"></image></div>
-								<div class=init-img><image src="assets/squared/streetlights.jpg"></image></div>
-								<div class=init-img><image src="assets/squared/centres.jpg"></image></div>
-								<div class=init-img><image src="assets/squared/funds1.jpg"></image></div>
-								<div class=init-img><image src="assets/squared/grants.jpg"></image></div>
-								<div id='init-title'>test</div>
-								<div><image id=init-main-img src="assets/squared/irrigation.jpg"</image><span id=init-main-text>text</span></div>
-	
-              </div>
-            </li>
-        </ul>
-
-        <script src='js/jquery-3.3.1.min.js' type='text/javascript'></script>
-        <script src='js/jquery.kwicks-2.2.1.js' type='text/javascript'></script>
-
-        <script type='text/javascript'>
-			// TODO
-			// use hide instead of fadeout
-			ani_duration = 200;
-			$().ready(function() {
-                $('.kwicks').kwicks({
-                    maxSize : 600,
-                    behavior: 'menu'
-                });
-            });
-            
-            $("ul").on('expand.kwicks', function(e, data) {
-							if (data.expanded != null) {
-								$(".panel-text").animate({
-								opacity: 0,
-								fontSize: '80%'
-								
-								},ani_duration);
-							} else {
-								$(".panel-text").animate({
-								opacity: 1.0,
-								fontSize: '100%'
-								},ani_duration);
-							}
-							
-							$(data.collapsed).find(".panel-chop").css('z-index','1');
-
-							$(data.expanded).find(".panel-chop").animate({
-								opacity: 0
-								},ani_duration, "swing", function() {
-										$(this).css('z-index','-1')
-									});
-							$(data.expanded).find(".panel-info").animate({
-								opacity: 1.0
-								},ani_duration);
-							$(data.collapsed).find(".panel-chop").animate({
-								opacity: 1.0
-								},ani_duration, "swing", function() {
-										$(this).css('z-index','1')
-									});
-							$(data.collapsed).find(".panel-info").animate({
-								opacity: 0
-								},ani_duration);	
-							//~ if (data.collapsed.length < 3) {
-								//~ $(data.collapsed).find(".panel-chop").animate({
-								//~ width: '45px',
-								//~ fontSize: '100%'
-								//~ },500);
-								//~ $(data.collapsed).find(".panel-text").animate({
-								//~ opacity: 0,
-								//~ },500);
-							//~ } else {
-								
-								//~ $(data.collapsed).find(".panel-chop").animate({
-								//~ width: '230px',
-								//~ fontSize: '200%'
-								//~ },500);
-								//~ $(data.collapsed).find(".panel-text").animate({
-								//~ opacity: 1.0,
-								//~ },500);
-								
-							//~ }
-				//~ if (data.expanded == null) {
-				  //~ //$('.panel-text').fadeIn(700);
-				  //~ $('.panel-text').animate({
-					//~ fontSize: "200%",
-					//~ opacity: 1.0
-				  //~ }, 500);
-				  //~ $(".panel-chop").show(500);
-				//~ } else {
-				  //~ //$('.panel-text').fadeOut(100);
-				  //~ $('.panel-text').animate({
-					//~ fontSize: "15%",
-					//~ opacity: 0.01
-				  //~ }, 100);
-				  //~ $(data.expanded).find(".panel-chop").hide(100);
-			    //~ }
-				console.log(data);
-            });
-            
-        </script>
-    </body>
+	<head>
+		<title>UNDP Africa's Solar Future</title>
+		<script src="js/d3.v3.min.js" language="JavaScript"></script>
+		<script src="js/liquidFillGauge.js" language="JavaScript"></script>
+		<link rel='stylesheet' type='text/css' href='css/jquery.kwicks-2.2.1.css'/>
+		<link rel='stylesheet' type='text/css' href='css/main.css'/>
+	</head>
+	<body>
+		<div id=title-text>
+			Africa:<br>The Solar Future
+		</div>
+		<ul class='kwicks kwicks-horizontal'>
+			<li id='panel-1'>
+				<div class=panel-chop>
+					<image class=panel-icon src="assets/world.svg"></image>
+					<br>
+					<div class=panel-text>Buildout</div>
+				</div>
+				<div class=panel-info>
+					<image src="assets/gear.png"></image>
+				</div>
+			</li>
+			<li id='panel-2'>
+				<div class=panel-chop>
+					<image class=panel-icon src="assets/sun1.svg"></image>
+					<br>
+					<div class=panel-text>Capacity</div>
+				</div>
+				<div class=panel-info>
+					<div>
+						<div id='cap-text'>
+							Africa receives the most solar irradiation of any continent! If <div id='country_chooser'><b>Germany </b><image id='da_chooser' src="assets/down_arrow.svg"></image></div> received the same, see what percent of electricity needs could be met in <b>home</b>, <b>industry</b>, and <b>medical</b> sectors. <br>
+						</div>
+						<div class=build-image-container>
+							<image id="home_icon" src="assets/home.svg"></image>
+							<svg id="home_gauge" width="15%" height="100" onclick="gauge1.update(NewValue());"></svg>
+							<svg id='home_bg' class='gauge_bg'>
+								<circle cx="50" cy="50"/>
+							</svg>
+						</div>
+						<div class=build-image-container>
+							<image id="indu_icon" src="assets/industry.svg"></image>
+							<svg id="indu_gauge" width="15%" height="100" onclick="gauge2.update(NewValue());"></svg>
+							<svg id='indu_bg' class='gauge_bg'>
+								<circle cx="50" cy="50"/>
+							</svg>
+						</div>
+						<div class=build-image-container>
+							<image id="hosp_icon" src="assets/health.svg"></image>
+							<svg id="hosp_gauge" width="15%" height="100" onclick="gauge3.update(NewValue());"></svg>
+							<svg id='hosp_bg' class='gauge_bg'>
+								<circle cx="50" cy="50">
+							</svg>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li id='panel-3'>
+				<div class=panel-chop>
+					<image class=panel-icon src="assets/list.svg"></image>
+					<br>
+					<div class=panel-text>Initiatives</div>
+				</div>
+				<div class=panel-info>
+				<div id='init-container'>
+					<div id=init-bar></div>
+					<div id='init-title'>test</div>
+					<div>
+						
+						<span id=init-main-text>
+							<image id=init-main-img src="assets/squared/irrigation.jpg"></image>
+							text
+						</span>
+					</div>
+				</div>
+				</div>
+			</li>
+		</ul>
+		<script src='js/jquery-3.3.1.min.js' type='text/javascript'></script>
+		<script src='js/jquery.kwicks-2.2.1.js' type='text/javascript'></script>
+		<script src='js/data.js' type='text/javascript'></script>
+		<script src='js/main.js' type='text/javascript'></script>
+	</body>
 </html>

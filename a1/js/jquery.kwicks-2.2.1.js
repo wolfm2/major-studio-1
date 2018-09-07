@@ -28,7 +28,7 @@
 				// menu behavior options:
 				delayMouseIn: 0,
 				delayMouseOut: 0,
-				selectOnClick: true,
+				selectOnClick: false,
 				deselectOnClick: false,
 				// slideshow behavior options:
 				interval: 2500,
