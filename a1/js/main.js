@@ -80,13 +80,14 @@ $("ul").on('expand.kwicks', function(e, data) {
 var g_config = liquidFillGaugeDefaultSettings();
 g_config.circleColor = "#0";
 g_config.textColor = "#0";
-g_config.waveTextColor = "#0";
-g_config.waveColor = '#bfff46'; //"#bee523";
+g_config.waveTextColor = "#73da83";
+g_config.waveColor = '#407949'; // '#bfff46'; //"#bee523";
 g_config.circleThickness = 0.14;
 // g_config.textVertPosition = 0.3;
-// g_config.waveAnimateTime = 1000;
+g_config.waveHeight = 0.05;
+g_config.waveAnimateTime = 1500;
 var gauge1 = loadLiquidFillGauge("home_gauge", 80, g_config);
-var gauge2 = loadLiquidFillGauge("indu_gauge", 60, g_config);
+var gauge2 = loadLiquidFillGauge("indu_gauge", 52, g_config);
 var gauge3 = loadLiquidFillGauge("hosp_gauge", 90, g_config);
 
 function NewValue() {

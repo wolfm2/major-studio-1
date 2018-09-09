@@ -20,7 +20,7 @@
 				maxSize: -1,
 				minSize: -1,
 				spacing: 5,
-				duration: 500,
+				duration: 300,
 				isVertical: false,
 				easing: undefined,
 				autoResize: true,

@@ -1,3 +1,6 @@
+
+/* KWICKS */
+
 .kwicks {
 	width: 700px;
 	height: 400px;
@@ -10,6 +13,8 @@
 	margin-left: 5px;
 	float: left;
 }
+
+/* GENERAL */
 
 #panel-1 {
 	background-color: #90ee90;
@@ -61,49 +66,14 @@ html,body {
 	font-weight: bold;
 }
 
-#cap-text {
-	font-size: 180%;
+#pot-text {
+	font-size: 150%;
 	padding: 30px;
-    padding-bottom: 0px;
+    padding-top: 47px;
+    padding-bottom: 20px;
 }
 
-.init-img {
-	display: inline-block;
-}
-
-.init-img img {
-	border-radius: 15px;
-	border: 2px solid black;
-	/* padding: 20px; */
-	width: 60px;
-	height: 60px;
-	-webkit-transform: scale(1);
-	-webkit-filter: grayscale(1);
-	/* Webkit Nightlies & Chrome Canary */
-	-webkit-transition: all .3s ease-in-out;
-}
-
-.init-img img:hover {
-	-webkit-transform: scale(1.05);
-	-webkit-filter: grayscale(0);
-}
-
-svg {
-	position: absolute;
-	width: 100%;
-}
-
-.build-image-container {
-    padding-left: 10px;
-    width: 27%;
-    display: inline-block;
-}
-
-.build-image-container img {
-	width: 100%;
-	padding: 30px;
-	padding-top: 21px;
-}
+/* GEOGRAPHY */
 
 .gauge_bg, #home_gauge, #indu_gauge, #hosp_gauge {
 	top: 245px;
@@ -111,7 +81,8 @@ svg {
 
 .gauge_bg circle {
 	/* stroke: green; */
-	fill: #ffe140;
+	fill: #73da83;
+	/* fill: #ffe140; */
 	opacity: .95;
 	/* stroke-width: 3; */
 	r: 50;
@@ -147,6 +118,7 @@ svg {
 #da_chooser {
 	width: 20px;
 	display: inline-block;
+	vertical-align: middle; 
 }
 
 #country_chooser {
@@ -154,28 +126,99 @@ svg {
     border: 3px solid black;
     border-radius: 4px;
 	display: inline-block;
+	vertical-align: baseline; 
 }
+
+svg {
+	position: absolute;
+	width: 100%;
+}
+
+.build-image-container {
+    padding-left: 10px;
+    width: 27%;
+    display: inline-block;
+}
+
+.build-image-container img {
+	width: 100%;
+	padding: 30px;
+	padding-top: 21px;
+}
+
+/* MARKET */
+
+#cap-text {
+	font-size: 150%;
+	padding: 30px;
+    padding-top: 55px;
+}
+
+#jobs-title {
+	position: absolute;
+	right: 35px;
+    top: 190px;
+	background-color: #fce978;
+    font-size: 75%;
+	border-radius; 30px;
+	padding: 5px;
+	opacity: 0.9;
+	z-index: 2;
+}
+
+#jobs-img {
+	position: absolute;
+	width:225px;
+	left: 350px;
+	font-size: 170%;
+}
+
+#jobs-img img {
+	position: absolute;
+	width: 100%;
+	opacity: 0;
+	border-radius: 4px;
+}
+
+/* INITIATIVES */
 
 #init-container {
 	padding: 27px;
+	padding-top:45px;
+}
+
+.init-img {
+	display: inline-block;
+}
+
+.init-img img {
+	border-radius: 15px;
+	border: 2px solid black;
+	/* padding: 20px; */
+	width: 60px;
+	height: 60px;
+	-webkit-transform: scale(1);
+	-webkit-filter: grayscale(1);
+	/* Webkit Nightlies & Chrome Canary */
+	-webkit-transition: all .3s ease-in-out;
+}
+
+.init-img img:hover {
+	-webkit-transform: scale(1.05);
+	-webkit-filter: grayscale(0);
 }
 
 #init-title {
-	font-size: 250%;
-	padding: 9px;
+	font-size: 180%;
+	padding: 45px;
 	padding-left: 0px;
+    padding-top: 45px;
+    padding-bottom: 5px;
 	
 }
 
-#qinit-main-img {
-}
-
-#qinit-main-text {
-	width: 40%;
-}
-
 #init-main-img {
-	width: 40%;
+	width: 30%;
     float: left;
     padding-right: 20px;
 }
@@ -184,5 +227,5 @@ svg {
     vertical-align: top;
     height: 100%;
     padding: 10px;
-	font-size: 180%;
+	font-size: 150%;
 }
