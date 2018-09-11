@@ -67,7 +67,7 @@ class ball {  // Definition of ball state and methods
 function mouseReleased() {
 	padLvl = 370;	// line where paddle starts
 	padWidth = 90;	// width of paddle
-	padHeight = 22;	// height of paddle
+	padHeight = 22;		// height of paddle
 	score = 0;		// obvious
 	balls = [];		// array of ball instances
 	setup();
