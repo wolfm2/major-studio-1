@@ -28,20 +28,24 @@ function setup() {
   rectMode(CENTER);
 }
 
+curX = 0;
+dragOff = 0; // drag offset
+
+function mouseDragged() {
+  dragOff += mouseX-pmouseX;
+}
+
 function draw() {
-  // push translate, rotate, pop
-  //push();
-  //translate(100,100);
-  //rotate(radians(mouseX));
-  //rect(0,0,100,100);
-  //pop();
-
-  //push();
-  //translate(250,100);
-  //rotate(radians(mouseY));
-  //rect(0,0,100,100);
-  //pop();
-
+  translate(dragOff,0);
+  background(255);
+  for (var key in dict) {
+    wid = 20
+    textSize(dict[key] * 2);
+    text(key, 0, height/2);
+    translate(textWidth(key),0);
+    
+    //curX += textWidth(key);
+  }
 }
 
 function mouseReleased() {
