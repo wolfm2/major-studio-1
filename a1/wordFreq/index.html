@@ -4,10 +4,67 @@
         <script src="p5.min.js"></script>
         <!--p5 DOM minified-->
         <script src="p5.dom.min.js"></script>
+        <script src="rita-full.js"></script>
         <!--JS code-->
         <script src="sketch.js"></script>
+        <style>
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+			}
+			.pad {
+				padding:7px;
+				}
+        </style>
     </head>
     <body>
-
+    <div id='help' class='pad' style='border-radius: 10px; right:70px; display: none; position: absolute; background-color:#DEE79C;'onclick='toggleHelp()'><div id='helpTxt' class='pad'></div></div>
+    <div id='main' style='background-color:#c7ad88; width:100%;'>
+		<image class='pad' src="help.png" style='float:right; height:50px;' onclick='toggleHelp()'></image>
+		<div class='pad'><h3>Enter a search term and hit "go":</h3></div>
+		<div class='pad'>Search context is 
+		  <select id='context'>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>
+			sentences.
+		</div>
+		<div>
+			<span>
+			<span class='pad'>Order results by </span>
+            <input type="radio" id="byProx" 
+                   name="orderResults" value="byProx" checked />
+            <label for="byProx">avg word proximity</label>
+        
+            <input type="radio" id="" 
+                   name="orderResults" value="byHits" />
+            <label for="byHits">hits in the context</label>
+        </span>
+		</div>
+		<div class='pad'>Minimum desired frequency:  
+		  <select id='minFreq'>
+				<option value="0">0%</option>
+				<option value="10" selected="selected">10%</option>
+				<option value="20">20%</option>
+				<option value="30">30%</option>
+				<option value="40">40%</option>
+				<option value="50">50%</option>
+				<option value="60">60%</option>
+				<option value="70">70%</option>
+				<option value="80">80%</option>
+				<option value="90">90%</option>
+			</select>
+		</div>
+		<div class='pad' id=''>
+			<input type="checkbox" name="delSmall" id='lt3' checked> Delete terms &lt;= 3 chars
+			<input type="checkbox" name="showNouns" value="true" id='nouns'> Highlight nouns
+	    </div>
+	    
+		<div class='pad'>
+			<input type="text" name="textIn" value="Germany"  id='term'>
+			<input type="button" value="go!" onclick="search()">
+	    </div>
+    </div>
     </body>
 </html>

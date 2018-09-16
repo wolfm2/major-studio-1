@@ -1,203 +1,241 @@
-var textX = 0;
-var myText1, myText2;
+var help = `
+<h3>Search for words in proximity to a search term.</h3>
+
+When text is found in the corpus the tool assembles a context 
+<br>
+of sentences before and after where the term was found.<br>
+<br>
+Within this context you can search/sort by:<br>
+<ul>
+  <li> How close (in # words) a result is from your search term </li>
+  <li> The percent of time it appears near your search term </li>
+</ul>
+You can set a minimimum percentage that the result must appear<br>
+in your results to be shown.<br>
+<br>
+And lastly, you can optionally delete short words (usually stopwords)<br>
+and hightlight any results that are nouns.
+<h4>Example:</h4>
+In the default search, for each sentence in which the word "Germany" <br>
+is found, two sentences before and after it are assembled into a context.<br>
+<br>
+Within this context, we rate each result on its average proximity to<br>
+"Germany", and show the percent of contexts in which it appeared.<br>
+<br>
+For all results if they appeared less than 10% of the time, we ignore<br>
+the result.<br>
+<br>
+We also, delete all short words and do not highlight nouns.<br>
+`
+
+var transX = 0;
+var transY = 0;
+var maxFontSz = 70;
 
 var sentences;
-var sentencesReady = false;  // cruddy semaphore lock
+var sentencesReady = false;
+// cruddy semaphore lock
 
-var input, button, prompt, numSlider, lt3Checkbox, nounsCheckbox;
+var term, contextRange, byProx, lt3, nouns, minFreq;
+// UI controls
 
+var showHelp = false;
+
+function toggleHelp () {
+	document.getElementById('helpTxt').innerHTML = help;
+	
+	if (showHelp)
+	  document.getElementById('help').style.display = 'none';
+	else
+	  document.getElementById('help').style.display = 'block';
+	
+	showHelp = !showHelp;
+}
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
-    background('grey');
-    // loadStrings('sotu-t-2.txt', callback);
-    // myText1 = new Text('sotu-t-1.txt', height/3);
-    // myText2 = new Text('sotu-t-2.txt', height/3*2);
+    createCanvas(windowWidth - 16, windowHeight - document.getElementById('main').offsetHeight - 17);
+    //createCanvas(800, windowHeight);
+    background('#ede9ce');
     ta = new TextAnalyze('undp.txt');
 
-  input = createInput();
-  input.position(20, 65);
-
-  button = createButton('submit');
-  button.position(input.x + input.width, 65);
-  button.mousePressed(findProx);
-
-  prompt = createElement('h2', 'Enter proximity search terms:');
-  prompt.position(20, 5);
-
-  numSlider = createSlider(1, 8, 3);
-  numSlider.position(20, 85);
-
-
-      lt3Checkbox =  createInput(0,1,0);               
-      lt3Checkbox.attribute("type","checkbox");     
-      lt3Checkbox.position(width/2,94);
-      lt3Checkbox.attribute('checked', null);  
-
-      nounsCheckbox =  createInput(0,1,0);               
-      nounsCheckbox.attribute("type","checkbox");     
-      nounsCheckbox.position(width/2,100);
-      nounsCheckbox.attribute('checked', null);  
-
-  textAlign(CENTER);
-  textSize(50);
-
+    textSize(50);
+    // search();
 }
 
 // TODO
-// add padding to top and bottom of sentences
-// lower and depunct input 
-// exit on no input
-// exit on word not found
-// multiple words in input
+// X exit on word not found
+// X multiple words in input
+// color nouns
 // B: very short number of sentences
 // B: indexOf == first instance
-// B: indexOf == -1
 
+function getSum(total, num) {
+    return total + num;
+}
 
 function findProx() {
-  var proxDict = {};
-  var name = input.value();
-  var num = parseInt(numSlider.value());
-  prompt.html('hello '+name+num+'!');
-  // input.value('');
+    var proxDict = {};
 
-        if (lt3Checkbox.elt.checked) { 
-        console.log('on');
-        //checkbox.value("on");
-        } 
+    background('#ede9ce');
+    push();
+    translate (transX, transY);
 
-        if (nounsCheckbox.elt.checked) { 
-        console.log('on');
-        //checkbox.value("on");
-        } 
+    var sentenceIdxArr = [];
+    // indices of occourrences
+    // for (var i in sentences) {
+	for (var i = 0; i < sentences.length; i++) { // rita screws w for-in index var
+        if (sentences[i].includes(" " + term + " "))
+            sentenceIdxArr.push(i);
+	}
+	
+    var sentenceContexts = [];
+    // surrounding context sentences for each occourrence
+    for (var i in sentenceIdxArr) {
+        i = parseInt(i);
+        // wtf?
+        var begin = ((i - contextRange) < 0) ? 0 : i - contextRange;
+        var end = i + contextRange > sentences.length - 1 ? sentences.length - 1 : i + contextRange;
+        // console.log(begin + " " + end);
+        sentenceContexts.push(sentences.slice(begin, end).join(" "));
+    }
 
-  var sentenceIdxArr = [];  // indices of occourrences
-  for (var i in sentences)
-    if (sentences[i].includes(" " + input.value() + " "))
-      sentenceIdxArr.push(i);
+    // for (var i in sentenceContexts) {
+    for (var i = 0; i < sentenceContexts.length; i++) { // rita screws w for-in index var
+        // create dict of words to array of proximities to key word
+        var splitContext = sentenceContexts[i].split(' ');
+        var keyIdx = splitContext.indexOf(name);
+        //for (var j in splitContext) {
+        for (var j = 0; j < splitContext.length; j++) { // rita screws w for-in index var
+            j = parseInt(j);
+            if ((lt3 && splitContext[j].length < 4) || splitContext[j].length < 1)
+                // rid of < 4 char words
+                continue;
+            if (!(splitContext[j]in proxDict))
+                proxDict[splitContext[j]] = [abs(j - keyIdx)];
+            else
+                proxDict[splitContext[j]].push(abs(j - keyIdx));
+        }
+    }
 
-  var sentenceContexts = []; // surrounding context sentences for each occourrence
-  for (var i in sentenceIdxArr) {
-    i = parseInt(i); // wtf?
-    var begin= ((i-num) < 0)? 0 : i-num;
-    var end = i+num > sentences.length-1 ? sentences.length-1 : i+num;
-    // console.log(begin + " " + end);
-    sentenceContexts.push(sentences.slice(begin, end).join(" "));
-  }
+    // Create items array
+    dictLen = Object.keys(proxDict).length;
+    var items = Object.keys(proxDict).map(function(key) {
+        var avg = parseInt(proxDict[key].reduce(getSum) / proxDict[key].length);
+        var percent = parseInt((proxDict[key].length / dictLen) * 100);
+        return [key, percent, avg];
+    });
 
-  for (var i in sentenceContexts) {  // create dict of words to array of proximities to key word
-    var splitContext = sentenceContexts[i].split(' ');
-    var keyIdx = splitContext.indexOf(name);
-    for (var j in splitContext) {
-      j = parseInt(j); 
-      if (! (splitContext[j] in proxDict))
-        proxDict[splitContext[j]] = [abs(j-keyIdx)];
-      else
-        proxDict[splitContext[j]].push(abs(j-keyIdx));
-    }  
-  }
-  // var sentencesWithWord = sentences.filter(containsWord);
-  // var sentenceRange = 
-  // create range sentence arrays for each word instance
-  // chunk into word: distance dicts
-  // map into relative range given highest and lowest bound
+    // Order by UI choice
+    items.sort(function(first, second) {
+        if (byProx)
+            return first[2] - second[2];
+        else
+            return second[1] - first[1];
+    });
+
+	// honor minFreq
+	items = items.filter(i => i[1] >= minFreq);
+	
+    var maxNum = 0;  // Get largest number to map font scale
+    for (var i in items)
+        if (byProx?items[i][2]:items[i][1] > maxNum)
+            maxNum = byProx?items[i][2]:items[i][1];
+
+    // RESULTS
+    textSize(maxFontSz / 4);
+    if (byProx)
+        label = "Avg word distance from term / Frequency in context sentences";
+    else
+        label = "Frequency in context sentences";
+    textAlign(LEFT);
+    if (! items.length) {
+		text("\n\n Search term not found.", 0, maxFontSz / 4);
+		return;
+	}
+    text("\n\n Results (" + label + "):", 0, maxFontSz / 4);
+    translate(0, maxFontSz/2);
+    textAlign(CENTER);
+
+    // for (var i in items) {
+    for (var i = 0; i < items.length; i++) { // rita screws w for-in index var
+        if (byProx)
+            var height = map(items[i][2], maxNum, 0, 15, maxFontSz);
+        else
+            var height = map(items[i][1], 0, maxNum, 15, maxFontSz);
+
+        textSize(height);
+        
+        if (byProx)
+            var val = " (" + items[i][2] + "/" + items[i][1] + "%)";
+        else
+            var val = " (" + items[i][1] + "%)";
+        
+        if (nouns && RiTa.getPosTags(items[i][0], true)[0] == "n") {
+			push();
+			fill('#935347');
+			text(items[i][0] + val, width / 2, 100);
+			pop();
+		} else {   
+			push();
+			fill('#64706c');
+			text(items[i][0] + val, width / 2, 100);
+			pop();
+		}
+        translate(0, height);
+    }
+    
+    pop();
 }
 
 class TextAnalyze {
 
-  constructor(fileName) {
-    loadStrings(fileName, this.callback);
-    sentences = [];
-  }
+    constructor(fileName) {
+        loadStrings(fileName, this.callback);
+        sentences = [];
+    }
 
-  callback(text) { // you cant access this. from js callback. use global.
-    var jText = text.join(' ');
-    var sentenceArr = jText.match( /[^\.!\?]+[\.!\?]+|[^\.!\?]+/g );
-    for (var s in sentenceArr)  // split into sentences wo nums,punct
-      sentences.push(sentenceArr[s].toLowerCase().replace(/[^a-z ]/g, "") ); 
+    callback(text) {
+        // you cant access this. from js callback. use global.
+        var jText = text.join(' ');
+        var sentenceArr = jText.match(/[^\.!\?]+[\.!\?]+|[^\.!\?]+/g);
+        // for (var s in sentenceArr) {
+        for (var s=0; s < sentenceArr.length; s++) { // rita screws w for-in index var
+            // split into sentences wo nums,punct
+            sentences.push(sentenceArr[s].toLowerCase().replace(/[^a-z ]/g, ""));
+		}
+        sentencesReady = true;
+    }
+}
+
+function search() {
+    term = document.getElementById('term').value.toLowerCase().replace(/[^a-z ]/g, "");
+    contextRange = parseInt(document.getElementById('context').value);
+    byProx = document.getElementById('byProx').checked;
+    lt3 = document.getElementById('lt3').checked;
+    nouns = document.getElementById('nouns').checked;
+    minFreq = parseInt(document.getElementById('minFreq').value);
+
+    if (term.replace(/ /g, "").length < 1) {
+        alert("Make sure to type in a search term.")
+        return;
+    }
+
+    //~ while (checkSentencesReady())
+        //~ ; // wait for load
+        
+    transY = 0;
+    findProx();
+    // alert(term + contextRange + byProx + lt3 + nouns) 
+}
+
+function mouseDragged() {
+    // transX += mouseX - pmouseX;
+    if (mouseY > 0 && mouseY < height)
+      transY += mouseY - pmouseY;
+    //~ if (mouseY > height - 30)
+      //~ transY -= 10;
       
-    sentencesReady = true;
-  }
+    //~ if (mouseY < 30)
+      //~ transY += 10;
+    findProx();
 }
-
-function proximity(words) {
-}
-
-function draw () {
-
-}
-
-
-function mw_Text(fileName, yPos) {
-    console.log(fileName);
-    var dictionary = [];
-    loadStrings(fileName, callback);
-
-    this.display = function() {
-        push();
-        // background('lightgray');
-        push();
-        translate(textX, yPos);
-        for (var i=0; i<dictionary.length; i++) {
-            textSize(dictionary[i].count);
-            var txtWidth = textWidth(dictionary[i].word);
-            text(dictionary[i].word, 0, 0);
-            translate(txtWidth, 0);
-        }
-        pop();
-        console.log('Horizontal Speed', mouseX-pmouseX);
-        pop();
-    }
-    
-    function callback(sotu) {
-        // console.log(sotu);
-        
-        sotu.forEach(function(phrases) {
-            // console.log(phrases);
-            
-            var words = phrases.split(' ');
-            words.forEach(function(word){
-                
-                // var filteredWords = dictionary.filter(function(el) {
-                //     return el.word == word;
-                //     // return el.toLowerCase().indexOf(query.toLowerCase()) > -1;
-                // })
-                // console.log('Filtered Words', filteredWords);
-                // // dictionary.push({'word': word, 'count': 1});
-                
-                // The filter() method creates a new array with all elements that pass the test implemented by the provided function.
-                // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
-                var filteredWords = dictionary.filter(function(element) {
-                  return element.word == word;
-                });
-          
-                if (filteredWords.length)
-                  filteredWords[0].count++;
-                else
-                  dictionary.push({word: word, count: 1});
-                
-            });
-            
-        });
-        
-        console.log(dictionary);
-        // myText1.display();
-        // myText2.display();
-        
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-        dictionary.sort(function(a, b) {
-            return  b.count - a.count;
-        }); 
-    }
-}
-
-function mw_mouseDragged() {
-    background('lightgray');
-    myText1.display();
-    // translate(0, 50);
-    myText2.display();
-    textX += mouseX-pmouseX;
-}
-  
-  
