@@ -14,6 +14,13 @@
 			.pad {
 				padding:7px;
 				}
+			.sdgWords {
+				cursor: pointer; 
+				color:#64706c;
+				}
+			.sdgWords:hover { 
+				color:#935347;
+				}
         </style>
     </head>
     <body>
@@ -63,8 +70,19 @@
 	    
 		<div class='pad'>
 			<input type="text" name="textIn" value="Germany"  id='term'>
-			<input type="button" value="go!" onclick="search()">
+			<input type="button" value="go!" onclick="search()"><br>
 	    </div>
+		<div class='pad'><b>Relevant terms in my SDG (select one):</b> 
+			<span class='sdgWords' style='cursor: pointer; color:"#64706c";' onclick='search("Affordable")'>Affordable</span>
+			<span class='sdgWords' onclick='search("Clean")'>Clean</span>
+			<span class='sdgWords' onclick='search("Energy")'>Energy</span>
+			<span class='sdgWords' onclick='search("initiatives")'>Initiatives</span>
+			<span class='sdgWords' onclick='search("Biomass")'>Biomass</span>
+			<span class='sdgWords' onclick='search("Solar")'>Solar</span>
+			<span class='sdgWords' onclick='search("Wind")'>Wind</span>
+			<span class='sdgWords' onclick='search("Technologies")'>Technologies</span>
+			<span class='sdgWords' onclick='search("Efficiency")'>Efficiency</span>
+		</div>
     </div>
     </body>
 </html>

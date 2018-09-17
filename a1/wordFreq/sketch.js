@@ -207,8 +207,12 @@ class TextAnalyze {
     }
 }
 
-function search() {
-    term = document.getElementById('term').value.toLowerCase().replace(/[^a-z ]/g, "");
+function search(autoTerm) {
+	if (autoTerm != undefined){
+		term = autoTerm.toLowerCase().replace(/[^a-z ]/g, "");
+		document.getElementById('term').value = autoTerm;
+    } else
+		term = document.getElementById('term').value.toLowerCase().replace(/[^a-z ]/g, "");
     contextRange = parseInt(document.getElementById('context').value);
     byProx = document.getElementById('byProx').checked;
     lt3 = document.getElementById('lt3').checked;
