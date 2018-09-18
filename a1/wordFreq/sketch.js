@@ -164,7 +164,7 @@ function findProx() {
     // textAlign(LEFT);
     textAlign(CENTER);
     if (! items.length) {
-		text("\n\n Search term not found.", 0, maxFontSz / 4);
+		text("\n\n Search term not found.", width/2, maxFontSz / 4);
 		return;
 	}
     // text("\n\n Results (" + label + "):", 0, maxFontSz / 4);
