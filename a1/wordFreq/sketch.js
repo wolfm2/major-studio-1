@@ -52,12 +52,20 @@ function toggleHelp () {
 	showHelp = !showHelp;
 }
 
+var myFont;
+function preload() {
+  myFont = loadFont('montserrat.ttf');
+}
+
 function setup() {
-    createCanvas(windowWidth - 16, windowHeight - document.getElementById('main').offsetHeight - 17);
+    createCanvas(windowWidth - 16, windowHeight - document.getElementById('main').offsetHeight - 60);
     //createCanvas(800, windowHeight);
-    background('#ede9ce');
+    
+    background('#dddddd');
     ta = new TextAnalyze('undp.txt');
 
+	//textFont('Arial');
+	textFont(myFont);
     textSize(50);
     // search();
 }
@@ -72,11 +80,14 @@ function setup() {
 function getSum(total, num) {
     return total + num;
 }
+var totTransY = 0;
 
 function findProx() {
     var proxDict = {};
+    
+    totTransY = 0;
 
-    background('#ede9ce');
+    background('#dddddd');
     push();
     translate (transX, transY);
 
@@ -147,13 +158,16 @@ function findProx() {
         label = "Avg word distance from term / Frequency in context sentences";
     else
         label = "Frequency in context sentences";
-    textAlign(LEFT);
+    // textAlign(LEFT);
+    textAlign(CENTER);
     if (! items.length) {
 		text("\n\n Search term not found.", 0, maxFontSz / 4);
 		return;
 	}
-    text("\n\n Results (" + label + "):", 0, maxFontSz / 4);
-    translate(0, maxFontSz/2);
+    // text("\n\n Results (" + label + "):", 0, maxFontSz / 4);
+    text("(" + label + ")", width/2, maxFontSz / 3);
+    // translate(0, maxFontSz/2);
+    totTransY += maxFontSz/2;
     textAlign(CENTER);
 
     // for (var i in items) {
@@ -172,16 +186,17 @@ function findProx() {
         
         if (nouns && RiTa.getPosTags(items[i][0], true)[0] == "n") {
 			push();
-			fill('#935347');
+			fill('#B91034');
 			text(items[i][0] + val, width / 2, 100);
 			pop();
 		} else {   
 			push();
-			fill('#64706c');
+			fill('#4E3E3C');
 			text(items[i][0] + val, width / 2, 100);
 			pop();
 		}
         translate(0, height);
+        totTransY += height;
     }
     
     pop();
@@ -220,7 +235,7 @@ function search(autoTerm) {
     minFreq = parseInt(document.getElementById('minFreq').value);
 
     if (term.replace(/ /g, "").length < 1) {
-        alert("Make sure to type in a search term.")
+        //alert("Make sure to type in a search term.")
         return;
     }
 
@@ -232,7 +247,26 @@ function search(autoTerm) {
     // alert(term + contextRange + byProx + lt3 + nouns) 
 }
 
-function mouseDragged() {
+
+function mouseWheel(event) {
+  print(event.delta);
+  //move the square according to the vertical scroll amount
+  transY -= event.delta;
+  if (transY < 0 - totTransY) transY = 0 - totTransY;
+  
+  if (transY > height - 100) transY = height - 100;
+  
+  findProx();
+  //uncomment to block page scrolling
+  return false;
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth - 16, windowHeight - document.getElementById('main').offsetHeight - 60);
+  search();
+}
+
+function mw_mouseDragged() {
     // transX += mouseX - pmouseX;
     if (mouseY > 0 && mouseY < height)
       transY += mouseY - pmouseY;

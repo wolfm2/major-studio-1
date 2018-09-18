@@ -1,0 +1,25 @@
+body {
+  padding-left: 3px;
+  background-color: #ededed;
+}
+
+.side_section {
+  padding-top:20px;
+}
+
+form {
+  display: inline-block;
+}
+
+.sdgWords {
+  cursor:pointer;
+}
+
+#tricolon {
+  font-size:30px;
+  cursor:pointer;
+  height: 100%;
+  padding-top:50%; 
+  display: inline-block;
+  float: right;
+}
