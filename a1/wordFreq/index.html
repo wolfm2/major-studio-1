@@ -80,7 +80,10 @@
     <span class='sdgWords' onclick='search("Technologies")'>Technologies</span>
     <span class='sdgWords' onclick='search("Efficiency")'>Efficiency</span>
 </div>
+<div id="sketch-holder">
+</div>
 </span><script>
+	
     $('#term').on('keydown', defocus);
     $('#tricolon').on('click', openNav);
     
@@ -94,11 +97,15 @@
     function openNav() {
         document.getElementById("mySidenav").style.transform = "translateX(0px)";
         // document.getElementById("mySidenav").style.width = "300px";
+		$('#tricolon').on('click', closeNav);
+		$('#main').on('click', closeNav);
     }
 
     function closeNav() {
         document.getElementById("mySidenav").style.transform = "translateX(-280px)";
         // document.getElementById("mySidenav").style.width = "0";
+		$('#tricolon').on('click', openNav);
+		$('#main').on('click', null);
     }
 </script>
 </body></html>

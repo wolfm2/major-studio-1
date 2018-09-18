@@ -58,8 +58,9 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(windowWidth - 16, windowHeight - document.getElementById('main').offsetHeight - 60);
+    var canvas = createCanvas(windowWidth - 16, windowHeight - document.getElementById('main').offsetHeight - 60);
     //createCanvas(800, windowHeight);
+    canvas.parent('sketch-holder');
     
     background('#dddddd');
     ta = new TextAnalyze('undp.txt');
@@ -81,11 +82,13 @@ function getSum(total, num) {
     return total + num;
 }
 var totTransY = 0;
+var resultBoxes = [];
 
 function findProx() {
     var proxDict = {};
     
     totTransY = 0;
+    resultBoxes = [];
 
     background('#dddddd');
     push();
@@ -188,6 +191,7 @@ function findProx() {
 			push();
 			fill('#B91034');
 			text(items[i][0] + val, width / 2, 100);
+			//resultBoxes.push();
 			pop();
 		} else {   
 			push();
@@ -264,6 +268,9 @@ function mouseWheel(event) {
 function windowResized() {
   resizeCanvas(windowWidth - 16, windowHeight - document.getElementById('main').offsetHeight - 60);
   search();
+}
+
+function mouseClicked() {
 }
 
 function mw_mouseDragged() {

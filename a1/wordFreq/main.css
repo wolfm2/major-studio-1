@@ -1,6 +1,7 @@
 body {
   padding-left: 3px;
   background-color: #ededed;
+  overflow:hidden;
 }
 
 .side_section {
