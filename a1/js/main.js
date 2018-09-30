@@ -80,23 +80,35 @@ $("ul").on('expand.kwicks', function(e, data) {
 var g_config = liquidFillGaugeDefaultSettings();
 g_config.circleColor = "#0";
 g_config.textColor = "#0";
-g_config.waveTextColor = "#73da83";
-g_config.waveColor = '#407949'; // '#bfff46'; //"#bee523";
+g_config.waveTextColor = "#B7E225"; // "#73da83";
+g_config.waveColor = '#718C17' // '#407949'; // '#bfff46'; //"#bee523";
 g_config.circleThickness = 0.14;
 // g_config.textVertPosition = 0.3;
-g_config.waveHeight = 0.05;
+g_config.waveHeight = 0 // 0.05;
 g_config.waveAnimateTime = 1500;
 var gauge1 = loadLiquidFillGauge("home_gauge", 80, g_config);
 var gauge2 = loadLiquidFillGauge("indu_gauge", 52, g_config);
 var gauge3 = loadLiquidFillGauge("hosp_gauge", 90, g_config);
 
 function NewValue() {
+	return(Math.floor(Math.random() * 50) + 50);
 	if (Math.random() > .5) {
 		return Math.round(Math.random() * 100);
 	} else {
 		return (Math.random() * 100).toFixed(1);
 	}
 }
+
+$("#cc_dropdown").hover(
+    function(event) {
+        // The mouse has entered the element, can reference the element via 'this'
+    },
+    function (event) {
+			gauge1.update(NewValue());
+			gauge2.update(NewValue());
+			gauge3.update(NewValue());
+    }
+);
 
 // populate initiatives bar
 for (i in initData) {

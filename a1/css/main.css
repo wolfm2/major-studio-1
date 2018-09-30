@@ -17,15 +17,15 @@
 /* GENERAL */
 
 #panel-1 {
-	background-color: #90ee90;
+	background-color: #98BB1F;
 }
 
 #panel-2 {
-	background-color: #ffe140;
+	background-color: #FFFB68;
 }
 
 #panel-3 {
-	background-color: #fff760;
+	background-color: #FF9A19;
 }
 
 html,body {
@@ -61,9 +61,16 @@ html,body {
 	/* font-family: Verdana, Geneva, sans-serif; */
 }
 
+#title-bg {
+    float: right;
+    height: 132px;
+}
+
 #title-text {
+  width: 700px;
 	font-size: 60px;
 	font-weight: bold;
+  padding-bottom: 15px;
 }
 
 #pot-text {
@@ -81,7 +88,8 @@ html,body {
 
 .gauge_bg circle {
 	/* stroke: green; */
-	fill: #73da83;
+	/* fill: #73da83; */
+	fill: #98BB1F;
 	/* fill: #ffe140; */
 	opacity: .95;
 	/* stroke-width: 3; */
@@ -127,6 +135,21 @@ html,body {
     border-radius: 4px;
 	display: inline-block;
 	vertical-align: baseline; 
+}
+
+#country_chooser:hover > #cc_dropdown { 
+      display: inline;
+}
+
+#cc_dropdown {
+    padding-right: 4px;
+    border: 3px solid black;
+    border-radius: 4px;
+    position: absolute;
+    left: 30px;
+    top: 73px;
+    background-color: #98BB1F;
+    display: none;
 }
 
 svg {
