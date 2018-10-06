@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="d3.v5.min.js"></script>
+        <style>
+            input {
+                width: 100%;
+                border-radius: 5px;
+                border-bottom: 3px solid;
+            }
+
+            #content, div {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font: 30pt sans-serif;
+            }
+
+            span {
+                transition: all 1s;
+            }
+
+            span:hover {
+                border-bottom: 3px solid;
+                font-size: 200%;
+                color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            var dataset = [[1, 3, 3, 5, 6, 7], [3, 5, 8, 3, 2, 6], [9, 0, 6, 3, 6, 3], [3, 4, 4, 5, 6, 8], [3, 4, 5, 2, 1, 8]];
+
+            var svg = d3.select("body").append("svg").attr("width", 500).attr("height", 500);
+
+            svg.append("g").selectAll("g").data(dataset).enter().append("g")//removing
+            .attr('transform', (d,i)=>{
+                return 'translate(' + 60 * i + ',0)'
+            }
+            )// Begin setting attributes
+            .selectAll("rect")// these
+            .data(function(d) {
+                return d;
+            })//lines
+            .enter()//text displays normally
+
+            .append('rect')// Add a rectangles for each 'new' data point
+
+            .transition().duration(1000).attr('fill', (d,i)=>{
+                if (d < 6)
+                    return "red";
+                else
+                    return "black"
+            }
+            )// .attr('x', (d,i) => {return 0 + (i + 10)}) // Begin setting attributes
+            .attr('y', function(d, i) {
+                // i is an index, 0, 1, 2, 3
+                return i * 20;
+                // this spaces them out evenly
+            }).attr('height', 10).attr('width', function(d) {
+                return d * 4;
+                // data point * 2 pixels wide
+            });
+        </script>
+        <div id='content'></div>
+    </body>
+</html>
