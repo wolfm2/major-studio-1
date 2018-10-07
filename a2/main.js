@@ -11,14 +11,15 @@
 // X redo Y scale
 // X  box when data does not exist
 // X region rotate
-// NA vs 0 == grey
-// legend easing
+// X NA vs 0 == grey  Answer: there are no "0" in the csv
+// X math round to 2 sig digit
+// X legend easing
+// top ten filter
+// get MIN above 0 s
 // region change css effects, grid alpha in
 // country renaming
-// X math round to 2 sig digits
-// add mean / average?
-// top ten filter
 // bonus: highlighted map?
+// add mean / average?
 // INTRO: title fade in, title move up, blocks come down, blocks alias into gray l->r, text fades in, text rotates
 
 // from https://gist.github.com/rosszurowski/67f04465c424a9bc0dae
@@ -43,7 +44,7 @@ function lerpColor(a, b, amount) {
 const dataPromised = d3.csv("SE4ALLData.csv");
 var data = [];
 
-curRegion = 4;
+curRegion = -1;
 
 dataPromised.then((d) => { // resolve the promises
   data = d
@@ -132,8 +133,8 @@ function gridPopulate(r) {
   //~ elt.classed(elt.attr("title"), true);
   //~ }) 
 
-  var ymin = parseFloat(_.min(_.min(ydata)).toFixed(2)); // year min - del trailing zeros
-  var ymax = parseFloat(_.max(_.max(ydata)).toFixed(2)); // year max - del trailing zeros
+  var ymin = parseFloat(_.min(_.min(ydata)).toFixed(4)); // year min - del trailing zeros
+  var ymax = parseFloat(_.max(_.max(ydata)).toFixed(4)); // year max - del trailing zeros
   var metricLabels = ['Region', 'Minimum', 'Maximum'];
   var metricDatas = [regions[r].name, ymin, ymax];
 
@@ -193,7 +194,7 @@ function gridPopulate(r) {
 
     .transition().duration(1000).attr('fill', (d, i) => {
       if (d == 0)
-        return '#cccccc'; // no data
+        return '#cccccc'; // no data - checked and there is no "0"
       else
         return lerpColor("#FFFFFF", regions[r].color, d * .01);
     })
@@ -226,16 +227,17 @@ var lStartX;
 var lStartY;
 var lAxisStartY;
 
+// easing - https://bl.ocks.org/d3noob/1ea51d03775b9650e8dfd03474e202fe
 function legendChange(r) {
   lStartY = graphAxisY + spaceSize * 2;
   lAxisStartY = lStartY + spaceSize;
   
 	d3.select('#legend-ramp')
-		.transition().duration(400)
+		.transition().ease(d3.easeBack).duration(400)
     .attr('y', lStartY)
   
   d3.select('#legend-axis')
-		.transition().duration(400)
+		.transition().ease(d3.easeBack).duration(400)
 		.attr("transform", 'translate(' + lStartX + ',' + lAxisStartY + ")")
 	
 	d3.select('.stop-right')
