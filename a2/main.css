@@ -1,9 +1,62 @@
-input {
-                width: 100%;
-                border-radius: 5px;
-                border-bottom: 3px solid;
-            }
+body {
+  background-color: #fafafa;
+	font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+	fill: #222222;
+}
 
+#title {
+	font-family: 'Fira Sans', sans-serif;
+	font-variant: normal;
+  font-weight: bold;
+  font-size: 30px;
+  transform: translate(0%, 1em);
+}
+
+.axis path,.axis line {
+		  display: none;
+}
+
+/* 
+ * ramp legend
+ */
+
+.stop-left {
+		stop-color: #FFFFFF;  
+}
+
+.stop-right {
+		stop-color: #FF0000;
+}
+
+.filled {
+		fill: url(#mainGradient);
+}
+
+.metrics, .metricData{
+  font-size: 20px;
+}
+
+@keyframes intro {
+  0% {
+/*
+    fill: red;
+*/
+    transform: translate(45%, 45%);
+		opacity: 0;
+  }
+  80% {
+    transform: translate(45%, 45%);
+		opacity: 1;
+  }
+  100% {
+    transform: translate(0%, 1em);
+    fill: black;
+  }
+}
+
+/*
             #content, div {
                 position: absolute;
                 top: 50%;
@@ -11,7 +64,9 @@ input {
                 transform: translate(-50%, -50%);
                 font: 30pt sans-serif;
             }
+*/
 
+/*
             span {
                 transition: all 1s;
             }
@@ -21,3 +76,4 @@ input {
                 font-size: 200%;
                 color: blue;
             }
+*/
