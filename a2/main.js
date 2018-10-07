@@ -10,8 +10,14 @@
 // X create region array / color
 // X redo Y scale
 // X  box when data does not exist
-// region rotate
-// break up large sets somehow
+// X region rotate
+// NA vs 0 == grey
+// legend easing
+// region change css effects, grid alpha in
+// country renaming
+// X math round to 2 sig digits
+// add mean / average?
+// top ten filter
 // bonus: highlighted map?
 // INTRO: title fade in, title move up, blocks come down, blocks alias into gray l->r, text fades in, text rotates
 
@@ -47,14 +53,24 @@ dataPromised.then((d) => { // resolve the promises
     .attr('width', window.innerWidth * .9)
     .attr('height', window.innerHeight * .9);
 	
-	title();
-  makeVis(curRegion)
+	title();  
+	setInterval(function(){
+  	if(++curRegion >= regions.length) curRegion = 0;
+  	makeVis(curRegion);
+  	}, 5000);
 });
+
+var legendDrawn = false;
 
 function makeVis(r) {
   gridPopulate(r);
-  graphAxis(r)
-  legendDraw(r);
+  graphAxis(r);
+  
+  if (!legendDrawn) {
+		legendDraw(r);
+		legendDrawn = true;
+	} else 
+		legendChange(r);
 }
 
 function regionGroup() {
@@ -68,6 +84,11 @@ function regionGroup() {
       memberData.push(line[0]);
     })
     regions[i]['member_data'] = memberData;
+
+		// filter here for worst 10
+		
+		regions[i]['members'] = regions[i]['members'].slice(0,9);
+		memberData = memberData.slice(0,9);
 
     var obj = {};
     // order the array by key
@@ -86,7 +107,7 @@ var spaceSize = blockSize + 1;
 var visY = window.innerHeight * .40; // visualization begin coords 
 var vLabelX = 0; // virt label coords
 var vLabelY = visY;
-var graphX = vLabelX + 100; // graph coords
+var graphX = vLabelX + 200; // graph coords
 var graphY = visY;
 
 var svg;
@@ -111,12 +132,12 @@ function gridPopulate(r) {
   //~ elt.classed(elt.attr("title"), true);
   //~ }) 
 
-  var ymin = _.min(_.min(ydata)); // year min
-  var ymax = _.max(_.max(ydata)); // year max
+  var ymin = parseFloat(_.min(_.min(ydata)).toFixed(2)); // year min - del trailing zeros
+  var ymax = parseFloat(_.max(_.max(ydata)).toFixed(2)); // year max - del trailing zeros
   var metricLabels = ['Region', 'Minimum', 'Maximum'];
   var metricDatas = [regions[r].name, ymin, ymax];
 
-	svg.selectAll('.metrics, .metricData, #country-label-group, #country-data-group') // fade out/remove prev data
+	svg.selectAll('.metrics, .metricData, #country-label-group, #country-data-group, #graph-axis') // fade out/remove prev data
 		.transition().duration(400)
 	  .style('opacity', '0').remove();
 	  
@@ -196,20 +217,29 @@ function graphAxis(r) {
     .scale(xscale);
 
   svg.append("g")
+		.attr('id', 'graph-axis')
     .attr("transform", 'translate(' + (graphX + (spaceSize / 2)) + ',' + graphAxisY + ")")
     .call(x_axis).select(".domain").remove()
 }
 
-var lAxisStartY;
+var lStartX;
 var lStartY;
+var lAxisStartY;
 
-function legendChange() {
-  lAxisStartY = lStartY + spaceSize;
+function legendChange(r) {
   lStartY = graphAxisY + spaceSize * 2;
+  lAxisStartY = lStartY + spaceSize;
   
+	d3.select('#legend-ramp')
+		.transition().duration(400)
+    .attr('y', lStartY)
   
-		//~ .attr('id', 'legend-axis')
-    //~ .attr("transform", 'translate(' + lStartX + ',' + lAxisStartY + ")")
+  d3.select('#legend-axis')
+		.transition().duration(400)
+		.attr("transform", 'translate(' + lStartX + ',' + lAxisStartY + ")")
+	
+	d3.select('.stop-right')
+    .style('stop-color', regions[r].color);
 }
 
 function legendDraw(r) {
@@ -240,6 +270,7 @@ function legendDraw(r) {
   lWidth = spaceSize * sizeLegend;
 
   lsvg.append('rect')
+		.attr('id', 'legend-ramp')
     .classed('filled', true)
     .style('stroke', 'lightgray')
     .style('stroke-width', '1px')
