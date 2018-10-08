@@ -56,6 +56,7 @@ dataPromised.then((d) => { // resolve the promises
 	
 	title();  
 	setInterval(function(){
+    if(!document.hasFocus()) return; // Mem leak: No focus == No timer buildup  
   	if(++curRegion >= regions.length) curRegion = 0;
   	makeVis(curRegion);
   	}, 5000);
