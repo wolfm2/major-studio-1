@@ -14,13 +14,25 @@
 // X NA vs 0 == grey  Answer: there are no "0" in the csv
 // X math round to 2 sig digit
 // X legend easing
-// top ten filter
-// get MIN above 0 s
-// region change css effects, grid alpha in
+// X top ten filter
+// get MIN above 0
+// o region change css effects, grid alpha in
 // country renaming
 // bonus: highlighted map?
 // add mean / average?
 // INTRO: title fade in, title move up, blocks come down, blocks alias into gray l->r, text fades in, text rotates
+
+// from https://stackoverflow.com/questions/13353674/how-to-transpose-object-in-underscorejs
+_.transpose = function(array) {
+	var result = []; // mw change to {} to transpose objects!
+	for (var i=0, l=array.length; i<l; i++)
+			for (var prop in array[i]) 
+					 if (prop in result)
+							 result[prop].push(array[i][prop]);
+					 else
+							 result[prop] = [ array[i][prop] ];
+			return result;
+};
 
 // from https://gist.github.com/rosszurowski/67f04465c424a9bc0dae
 function lerpColor(a, b, amount) {
@@ -51,8 +63,10 @@ dataPromised.then((d) => { // resolve the promises
   regionGroup();
   
   svg = d3.select("body").append("svg")
-    .attr('width', window.innerWidth * .9)
-    .attr('height', window.innerHeight * .9);
+		// .attr('viewBox', '0 0 900 600')
+  //~ .attr('position', 'fixed')
+    .attr('width', '750') //window.innerWidth * .9)
+    .attr('height', '600'); // window.innerHeight * .9);
 	
 	title();  
 	setInterval(function(){
@@ -87,17 +101,32 @@ function regionGroup() {
     })
     regions[i]['member_data'] = memberData;
 
-		// filter here for worst 10
+		// filter for worst 10
+		var byYearSorted = _.sortBy(_.map(memberData, (d) => {
+			rv = [];
+			for (var idx=1990; idx <= 2016; idx++)
+				rv.push(parseFloat(d[idx]));
+			var sum =_.sum(rv);
+			if (sum == 0) // NO DATA AT ALL - DONT ADD
+			  return;
+			else
+				return {'name':d['Country Name'], 'tot':sum, 'val':rv};
+			}), (d) => {return d.tot;}).slice(0,9);
 		
-		regions[i]['members'] = regions[i]['members'].slice(0,9);
-		memberData = memberData.slice(0,9);
+		// underserved regions
+		regions[i]['members'] = _.map(byYearSorted, (d) => {
+			return d.name;
+			});
+		
+		// underserved region data	
+		regions[i]['md_by_year'] = byYearSorted;
 
-    var obj = {};
-    // order the array by key
-    memberData.forEach(c => Object.keys(c).forEach(function(v) {
-      (obj[v] || (obj[v] = [])).push(c[v]);
-    }));
-    regions[i]['md_by_year'] = obj;
+    // var obj = {};
+    // order the array by key 
+    //~ memberData.forEach(c => Object.keys(c).forEach(function(v) {
+      //~ (obj[v] || (obj[v] = [])).push(c[v]);
+    //~ }));
+    //~ regions[i]['md_by_year'] = obj;
   });
 }
 
@@ -106,7 +135,7 @@ var numYears = 26;
 var blockSize = 20;
 var spaceSize = blockSize + 1;
 
-var visY = window.innerHeight * .40; // visualization begin coords 
+var visY = 250; // window.innerHeight * .40; // mw visualization begin coords 
 var vLabelX = 0; // virt label coords
 var vLabelY = visY;
 var graphX = vLabelX + 200; // graph coords
@@ -124,9 +153,7 @@ function title() {
 function gridPopulate(r) {
   var ydata = []; // year data
 
-  for (var idx = 1990; idx <= 2016; idx++)
-    // array by year
-    ydata.push(regions[r].md_by_year[idx].map(Number));
+	ydata = _.transpose(_.map(regions[r]['md_by_year'], (d) => {return d.val}));
 
   //~ d3.selectAll('.user').each(
   //~ function(){
@@ -134,10 +161,14 @@ function gridPopulate(r) {
   //~ elt.classed(elt.attr("title"), true);
   //~ }) 
 
-  var ymin = parseFloat(_.min(_.min(ydata)).toFixed(4)); // year min - del trailing zeros
-  var ymax = parseFloat(_.max(_.max(ydata)).toFixed(4)); // year max - del trailing zeros
+  // var ymin = parseFloat(_.min(_.min(ydata)).toFixed(4)); // year min - del trailing zeros
+  // var ymax = parseFloat(_.max(_.max(ydata)).toFixed(4)); // year max - del trailing zeros
+	var ymin = parseFloat((_.sum(regions[r]['md_by_year'][0].val) / 27).toFixed(4));
+	var ymax = parseFloat((_.sum(regions[r]['md_by_year'].slice(-1)[0].val) / 27).toFixed(4));
   var metricLabels = ['Region', 'Minimum', 'Maximum'];
   var metricDatas = [regions[r].name, ymin, ymax];
+
+	console.log(regions[r]['md_by_year'].slice(-1)[0].val);
 
 	svg.selectAll('.metrics, .metricData, #country-label-group, #country-data-group, #graph-axis') // fade out/remove prev data
 		.transition().duration(400)
@@ -192,11 +223,15 @@ function gridPopulate(r) {
     .enter() //text displays normally
 
     .append('rect') // rect for each data point
-
-    .transition().duration(1000).attr('fill', (d, i) => {
-      if (d == 0)
+		.style('opacity', '0')
+    .transition().duration(1000).ease(d3.easeBack)
+		.style('opacity', '1')
+    
+    .attr('fill', (d, i) => {
+      if (d == 0 || isNaN(d)) {
+        console.log(d);
         return '#cccccc'; // no data - checked and there is no "0"
-      else
+      } else
         return lerpColor("#FFFFFF", regions[r].color, d * .01);
     })
     .attr('y', function(d, i) {

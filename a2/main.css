@@ -6,11 +6,16 @@ body {
 	fill: #222222;
 }
 
+svg {
+  width: 100%;
+  height: 100%;
+}
+
 #title {
 	font-family: 'Fira Sans', sans-serif;
 	font-variant: normal;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 35px;
   transform: translate(0%, 1em);
 }
 
@@ -35,6 +40,10 @@ body {
 }
 
 .metrics, .metricData{
+  font-size: 25px;
+}
+
+#country-label-group{
   font-size: 20px;
 }
 
@@ -43,11 +52,11 @@ body {
 /*
     fill: red;
 */
-    transform: translate(45%, 45%);
+    transform: translate(30%, 30%);
 		opacity: 0;
   }
   80% {
-    transform: translate(45%, 45%);
+    transform: translate(30%, 30%);
 		opacity: 1;
   }
   100% {
