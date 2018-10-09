@@ -20,7 +20,7 @@
 // country renaming
 // bonus: highlighted map?
 // add mean / average?
-// INTRO: title fade in, title move up, blocks come down, blocks alias into gray l->r, text fades in, text rotates
+// INTRO: title fade in, title move up, blocks come down, blocks alias into gray l->r, text fades in
 
 // from https://stackoverflow.com/questions/13353674/how-to-transpose-object-in-underscorejs
 _.transpose = function(array) {
@@ -102,20 +102,34 @@ function regionGroup() {
     regions[i]['member_data'] = memberData;
 
 		// filter for worst 10
-		var byYearSorted = _.sortBy(_.map(memberData, (d) => {
+		var byYearSorted = _.map(memberData, (d) => {
 			rv = [];
 			for (var idx=1990; idx <= 2016; idx++)
 				rv.push(parseFloat(d[idx]));
-			var sum =_.sum(rv);
-			if (sum == 0) // NO DATA AT ALL - DONT ADD
-			  return;
+			var sum =_.sum(_.map(rv, (d) => { // NaNs screw this up wo mapping first
+				  if (isNaN(d)) return NaN;  // added NaNs back in 
+				  else return d;
+				}));
+				
+			if (sum == 0 || isNaN(sum)) // NO DATA AT ALL - DONT ADD
+			  return; // adds 'undefined'
 			else
 				return {'name':d['Country Name'], 'tot':sum, 'val':rv};
-			}), (d) => {return d.tot;}).slice(0,9);
-		
+			});
+				
+		// csv "" entries == NaNs giving too much trouble re special casing.  just rm them for now.
+		byYearSorted = _.filter(byYearSorted, (d) => {return d != undefined});
+		byYearSorted = _.sortBy(byYearSorted, (d) => {
+				console.log(d);
+				return d.tot;
+				}).slice(0,9);
+				
 		// underserved regions
 		regions[i]['members'] = _.map(byYearSorted, (d) => {
-			return d.name;
+			if (d.name in cRenamed)
+			  return cRenamed[d.name]; // give it a new name
+			else
+				return d.name;
 			});
 		
 		// underserved region data	
@@ -145,7 +159,7 @@ var svg;
 
 function title() {
   svg.append("text")
-    .text('Rural Electricity Access')
+    .text('Rural Electrification')
     .attr('id', 'title')
     .style('animation', 'intro 6s')
 }

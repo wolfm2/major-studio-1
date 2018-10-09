@@ -13,7 +13,7 @@ var regions = [
 {
     'name': 'Sub-Saharan Africa',
     'members': ['Angola', 'Benin', 'Botswana', 'Burkina Faso', 'Burundi', 'Cameroon', 'Cape Verde', 'Central African Republic', 'Chad', 'Comoros', 'Congo, Rep.', 'Congo, Dem. Rep.', 'Cote d\'Ivoire', 'Djibouti', 'Equatorial Guinea', 'Eritrea', 'Ethiopia', 'Gabon', 'Gambia, The', 'Ghana', 'Guinea', 'Guinea-Bissau', 'Kenya', 'Lesotho', 'Liberia', 'Madagascar', 'Malawi', 'Mali', 'Mauritania', 'Mauritius', 'Mayotte', 'Mozambique', 'Namibia', 'Niger', 'Nigeria', 'Reunion', 'Rwanda', 'St. Helena', 'Senegal', 'Seychelles', 'Sierra Leone', 'Somalia', 'South Africa', 'South Sudan', 'Sudan', 'Swaziland', 'Tanzania', 'Togo', 'Uganda', 'Zambia', 'Zimbabwe'],
-    'color': '#DAC646'
+    'color': '#0000FF'
 },
 //~ {
     //~ 'name': 'Antarctic',
@@ -48,17 +48,17 @@ var regions = [
 {
     'name': 'Caribbean Islands',
     'members': ['Anguilla', 'Antigua and Barbuda', 'Aruba', 'Bahamas, The', 'Barbados', 'Bermuda', 'Cayman Islands', /* 'Bonaire, Sint Eustatius and Saba', */ 'Cuba', 'Dominica', 'Curacao', 'Dominican Republic', 'Grenada', 'Guadeloupe', 'Haiti', 'Jamaica', 'Martinique', 'Montserrat', 'Puerto Rico', /* 'St. Bathélemy',*/ 'St. Kitts and Nevis', 'St. Lucia', 'St. Martin (French part)', 'St. Vincent and the Grenadines', 'Sint Maarten (Dutch part)', 'Trinidad and Tobago', 'Turks and Caicos Islands', 'British Virgin Islands', 'Virgin Islands (U.S.)'],
-    'color': '#0000ff'
+    'color': '#EBE7A5'
 },
 {
     'name': 'Central America',
     'members': ['Belize', 'Costa Rica', 'El Salvador', 'Guatemala', 'Honduras', 'Mexico', 'Nicaragua', 'Panama'],
-    'color': '#EBE7A5'
+    'color': '#00FF00'
 },
 {
     'name': 'Oceania',
     'members': ['American Samoa', 'Australia', /* 'Christmas Island', 'Cocos (Keeling) Islands',*/ 'Cook Islands', 'Fiji', 'French Polynesia', 'Guam', 'Kiribati', 'Marshall Islands', 'Micronesia, Fed. Sts.', 'Nauru', 'New Caledonia', 'New Zealand', 'Niue', /* 'Norfolk Island',*/ 'Northern Mariana Islands', 'Palau', 'Papua New Guinea', /* 'Pitcairn', */ 'Samoa', 'Solomon Islands', /* 'Tokelau', */ 'Tonga', 'Tuvalu', /* 'United States Minor Outlying Islands [includes the Howland-Baker, Johnston, Midway, US Line and Wake island groups]', */ 'Vanuatu', 'Wallis and Futuna'],
-    'color': '#00ff00'
+    'color': '#DAC646'
 },
 {
     'name': 'South America',
@@ -66,3 +66,15 @@ var regions = [
     'color': '#709F66'
 }
 ]
+
+// countries renamed
+cRenamed = {
+	"Russian Federation":"Russia",
+	"Syrian Arab Republic":"Syrian Arab Rep.",
+	"Bosnia and Herzegovina":"BiH",
+	"Dominican Republic":"Dominican Rep.",
+	"Turks and Caicos Islands":"TCI",
+	"St. Vincent and the Grenadines":"SVG",
+	"Antigua and Barbuda":"AG",
+	"Micronesia, Fed. Sts.":"Micronesia"
+}
