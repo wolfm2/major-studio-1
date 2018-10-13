@@ -15,9 +15,10 @@
 // X math round to 2 sig digit
 // X legend easing
 // X top ten filter
-// get MIN above 0
+// X get MIN above 0
 // o region change css effects, grid alpha in
-// country renaming
+// X country renaming
+// title color alpha out
 // bonus: highlighted map?
 // add mean / average?
 // INTRO: title fade in, title move up, blocks come down, blocks alias into gray l->r, text fades in
@@ -53,27 +54,65 @@ function lerpColor(a, b, amount) {
   return (rv);
 }
 
+function scaleSVG() {
+		var w = window.innerWidth / svgWidth;
+		var h = window.innerHeight / svgHeight;
+		s = w<h?w:h;
+		
+		//~ tx = ((s * svgWidth) - svgWidth) /2;
+		//~ tx = 0;  // because it is centered
+		//~ ty = ((s * svgHeight) - svgHeight) / 2;
+		
+		// wtf does it scale the transform?
+		//~ tx *= (1 / s); // not completely right yet
+		//~ ty *= (1 / s); // unscale the transform.
+		
+		tx = 50 * (1 / s); // not completely right yet
+		ty = 50 * (1 / s); // unscale the transform.
+		
+		d3.select("svg")
+		  .style('transform', 'scale(' + s +') translate(-'+ tx + '%,-' + ty +'%)');
+			//.style('transform', 'scale(' + s +') translate(-50%, -50%)');
+			//.style('transform', 'scale(' + s +') translate('+ tx + 'px,' + ty +'px)');
+}
+
 const dataPromised = d3.csv("SE4ALLData.csv");
 var data = [];
 
 curRegion = -1;
 
+var svgWidth = 800;
+var svgHeight = 600;
+
+var tx = 0;
+var ty = 0;
+
+function nextRegion (){
+		setInterval(function(){
+    if(!document.hasFocus()) return; // Mem leak: No focus == No timer buildup  
+  	if(++curRegion >= regions.length) curRegion = 0;
+  	makeVis(curRegion);
+  	}, 7000);
+}
+
 dataPromised.then((d) => { // resolve the promises
   data = d
   regionGroup();
   
-  svg = d3.select("body").append("svg")
-		// .attr('viewBox', '0 0 900 600')
-  //~ .attr('position', 'fixed')
-    .attr('width', '750') //window.innerWidth * .9)
-    .attr('height', '600'); // window.innerHeight * .9);
+  window.addEventListener('resize', scaleSVG);
+  
+  svg = d3.select("body").append('center').append("svg")
+		//.attr('position', 'fixed')
+		//.attr('viewBox', '0 0 800 606')
+		//.attr('preserveAspectRatio', 'xMidYMid meet');
+    .attr('width', svgWidth) //window.innerWidth * .9)
+    .attr('height', svgHeight); // window.innerHeight * .9);
 	
-	title();  
-	setInterval(function(){
-    if(!document.hasFocus()) return; // Mem leak: No focus == No timer buildup  
-  	if(++curRegion >= regions.length) curRegion = 0;
-  	makeVis(curRegion);
-  	}, 5000);
+	scaleSVG();
+	title(); 
+	svg = svg.append('g') 
+	  .attr('id', 'vis');
+  setTimeout(nextRegion, 12000);
 });
 
 var legendDrawn = false;
@@ -120,7 +159,7 @@ function regionGroup() {
 		// csv "" entries == NaNs giving too much trouble re special casing.  just rm them for now.
 		byYearSorted = _.filter(byYearSorted, (d) => {return d != undefined});
 		byYearSorted = _.sortBy(byYearSorted, (d) => {
-				console.log(d);
+				// console.log(d);
 				return d.tot;
 				}).slice(0,9);
 				
@@ -158,10 +197,39 @@ var graphY = visY;
 var svg;
 
 function title() {
+	
+	svg.append("image")
+    .attr('id', 'img-un')
+    .attr('xlink:href', 'UNDP.png')
+    .style('animation', 'intro-un 20s');
+	
+  svg.append("rect")
+    .attr('id', 'backing')
+    .attr('class', 'tileboard')
+    .style('animation', 'intro-b 20s');
+    
   svg.append("text")
     .text('Rural Electrification')
     .attr('id', 'title')
-    .style('animation', 'intro 6s')
+    .attr('class', 'tileboard')
+    .style('animation', 'intro-t 18s');
+    
+  copyText = svg.append("text")
+    .attr('id', 'copy-t')
+    .attr('class', 'copy-t')
+    .style('animation', 'intro-c 18s');
+    
+  var copyTextContent = [
+		'Rural infrastructure gains over the past decades vary dramatically,',
+		'with the Sub-Saharan region remaining the most ill-positioned to',
+		'act on the UNDP sustainable development goals.',
+		' ',
+		'These are ten most underserved countries per region. The rows are',
+		'sorted worst to best over the 27 year sample period.' 
+	];
+  copyTextContent.forEach((d,i) => {
+		copyText.append("tspan").attr('x', '0').attr('dy', '1.4em').text(d);
+		})
 }
 
 function gridPopulate(r) {
@@ -179,10 +247,10 @@ function gridPopulate(r) {
   // var ymax = parseFloat(_.max(_.max(ydata)).toFixed(4)); // year max - del trailing zeros
 	var ymin = parseFloat((_.sum(regions[r]['md_by_year'][0].val) / 27).toFixed(4));
 	var ymax = parseFloat((_.sum(regions[r]['md_by_year'].slice(-1)[0].val) / 27).toFixed(4));
-  var metricLabels = ['Region', 'Minimum', 'Maximum'];
-  var metricDatas = [regions[r].name, ymin, ymax];
+  var metricLabels = ['Region', 'Min Average', 'Max Average'];
+  var metricDatas = [regions[r].name, ymin + '%', ymax + '%'];
 
-	console.log(regions[r]['md_by_year'].slice(-1)[0].val);
+	// console.log(regions[r]['md_by_year'].slice(-1)[0].val);
 
 	svg.selectAll('.metrics, .metricData, #country-label-group, #country-data-group, #graph-axis') // fade out/remove prev data
 		.transition().duration(400)
@@ -243,7 +311,7 @@ function gridPopulate(r) {
     
     .attr('fill', (d, i) => {
       if (d == 0 || isNaN(d)) {
-        console.log(d);
+        // console.log(d);
         return '#cccccc'; // no data - checked and there is no "0"
       } else
         return lerpColor("#FFFFFF", regions[r].color, d * .01);
