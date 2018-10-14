@@ -81,7 +81,7 @@ var data = [];
 
 curRegion = -1;
 
-var svgWidth = 800;
+var svgWidth = 780;
 var svgHeight = 600;
 
 var tx = 0;

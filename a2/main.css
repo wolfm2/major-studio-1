@@ -62,14 +62,14 @@ svg {
     opacity: 1;
 		width: 48px;
 		height: 48px;
-    transform: translate(94%, 0%);
+    transform: translate(92%, 0%);
 }
 
 #backing {
     opacity: 0;
-		width: 90px;
+		width: 50px;
 		height: 50px;
-    transform: translate(94%, 0%);
+    transform: translate(92%, 0%);
     fill: black;
 }
 
@@ -123,9 +123,9 @@ svg {
   }
   95% {
     opacity: 1;
-		width: 90px;
+		width: 50px;
 		height: 50px;
-    transform: translate(94%, 0%);
+    transform: translate(92%, 0%);
     fill: black;
   }
 }
