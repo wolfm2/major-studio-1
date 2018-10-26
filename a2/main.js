@@ -103,7 +103,7 @@ dataPromised.then((d) => { // resolve the promises
   
   svg = d3.select("body").append('center').append("svg")
 		//.attr('position', 'fixed')
-		//.attr('viewBox', '0 0 800 606')
+		//.attr('viewBox', '0 0 1600 1200')
 		//.attr('preserveAspectRatio', 'xMidYMid meet');
     .attr('width', svgWidth) //window.innerWidth * .9)
     .attr('height', svgHeight); // window.innerHeight * .9);
