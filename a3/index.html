@@ -4,20 +4,123 @@
   <head>
 
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="description" content="Basic beginner's source code to drawing arcs in D3 using dynamically-generated data.">
-		<link rel="stylesheet" href="css/main.css">
-    
+    <link rel="stylesheet" href="css/main.css">
     <title>UN PROTO</title>
+    
+    <!-- utils -->
+		<script type="text/javascript" src="libs/lodash.js"></script>
+		<script type="text/javascript" src="libs/d3.v4.min.js"></script>
+		<script type="text/javascript" src="libs/d3-queue.v3.min.js"></script>
+		<script type="text/javascript" src="libs/jquery.min.js"></script>
+		
+    <!-- bootstrap -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<script src="libs/bootstrap.min.js"></script>
+
+    <!--[if IE]>
+        <script type="text/javascript">
+             var console = { log: function() {} };
+        </script>
+    <![endif]-->
+
+		<!-- fullPage -->
+		<link rel="stylesheet" type="text/css" href="libs/fullPage.js/dist/fullpage.css" />
+    <link rel="stylesheet" type="text/css" href="libs/fullPage.js/examples/examples.css" />
+    <script type="text/javascript" src="libs/fullPage.js/dist/fullpage.js"></script>
     
   </head>
 
   <body>
-    <svg id='main'></svg>
+		  
+			<div id="fullpage"> <!-- Page Sections -->
+		
+		    <div id=vis0 class="section"></div>	
+			
+		    <div class="section">
+		        <div class="intro">
+		            <h1>jQuery adaptor</h1>
+		            <p>You can use fullpage.js as a jQuery plugin!</p>
+		            <p>Read <a href="https://github.com/alvarotrigo/fullPage.js#initialization">the docs</a> for more info!</p>
+		        </div>
+		    </div>
+		    
+		    <div class="section">
+		        <div class="slide"><h1>Section 2.1</h1></div>
+		        <div class="slide"><h1>Section 2.2</h1></div>
+		        <div class="slide"><h1>Section 2.3</h1></div>
+		    </div>
+		    
+		    <div class="section">
+		    
+		    <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Logo</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Projects</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid text-center">    
+  <div class="row content">
+<!--
+    <div class="col-sm-2 sidenav">
+      <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p>
+    </div>
+-->
+    <div class="col-sm-8 text-left"> 
+      <h1>Welcome</h1>
+      
+	    <svg id='main'></svg>
+	    
+    </div>
+    <div class="col-sm-4 sidenav">
+
+      <div class="col-sm-8 sidenav">
+      <div class="well">
+        <p>Data Context: Living Standard Measurement Study</p>
+      </div>
+      <div class="well">
+        <p>Deeper info about what you clicked on</p>
+      </div>
+			</div>	
+      <div class="col-sm-4 sidenav">
+			</div>	
+    </div>
+    
+  </div>
+</div>
+		    
+		    
+		    </div>
+		    
+		    <div class="section">BYE!</div>
+		</div>
+		
   </body>
   
-	<script type="text/javascript" src="libs/d3.v4.min.js"></script>
-	<script type="text/javascript" src="libs/lodash.js"></script>
+  <!-- local -->
 	<script type="text/javascript" src="js/util.js"></script>
+	<script type="text/javascript" src="js/html.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/nigeriaData.js"></script>
+	
 </html>

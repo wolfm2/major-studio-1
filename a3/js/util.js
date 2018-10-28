@@ -1,21 +1,30 @@
 
 // TODO
 // fill out functions
+// enclose panels in div overflow hidden
+// recalc vis height for small screen
 
 var PI = Math.PI;
-
-var width = window.innerWidth,
-    height = window.innerHeight;
-
 
 function cascadeChildren (sec, parent, animation) {
 }
 
 var arcMax = 0.75; // percent of circle considered max
-var arcGroupInnerWidth = 10;
+
+var arcGLineBuf;
+var arcMinRadius;
+
+function calcSizeVis0() {
+	constraint = vis0svgW<vis0svgH?vis0svgW:vis0svgH; // get the smaller one
+	
+	arcMinRadius = constraint*.30;
+	arcGLineBuf = arcMinRadius*.1;
+}
+
 // mArkL0 wrapper
 function mal0Wrapper(d,i) {
-	path = mArkL0(width/2, height/2, 100+(i*arcGroupInnerWidth), 8, '#0000FF', d*180);
+	calcSizeVis0();
+	path = mArkL0(vis0svgW/2, vis0svgH/2, arcMinRadius+(i*arcGLineBuf), arcGLineBuf*.8, '#0000FF', d*180);
 	return path;
 }
 
@@ -44,14 +53,4 @@ function mArkL1 () { // make concentric arc group
 function mArkL2 () { // make arc group group (several sets of arcs)
 }
 
-// returns:
-// HHH Gender, HH ID, strom connected, strom src, solar panel, max edu father, max edu mother, dist to major road, 
-// dist to popcenter, dist to market, floor, root
-function search0 (d) {
-}
-
-// returns
-// mEdu, fEdu, fHead, isRural, stromMetric
-function search1 (d) {
-}
 
