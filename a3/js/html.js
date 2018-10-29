@@ -9,7 +9,7 @@ var template0 = `
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="#">{0}</a>
+      <a class="navbar-brand" href="#"><b>{0}</b></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <!--
@@ -86,15 +86,18 @@ function mkMenu(names, sect) {
 	return (html);
 }
 
-copy00 = 'This series derives from World Bank\'s Standards Measurement Study (LSMS).  The data here is from the third wave of the LSMS and covers location, education, and consuming habits of the respondents';
-copy01 = 'Of the total head of household respondents (f:X mX) X% of females chose solar whereas X% of men did.';
-
+var copy00 = 'This series derives from World Bank\'s <b>Living Standards Measurement Study</b> (LSMS).  The data here is from the third wave of the LSMS and covers location, education, and consuming habits of the respondents';
+var copyTemp01 = 'Of the total head of household respondents, <b>{0}</b> were female and <b>{1}</b> were male. <b>{2}</b> of female reported using a solar panel for their power needs whereas <b>{3}</b> of men did. This means that female heads of households were <b>{4}%</b> more likely to invest in solar than their male counterparts.';
+var copy01;
 
 function initHtml () {
+	var d = data.nigeriaF;
+	copy01 = copyTemp01.format(d.HeadW, d.HeadM, d.solarW , d.solarM, parseInt((100/d.solarPcM)*d.solarPcW-100));
+	
 	var m = mkMenu(['By Gender', 'By Education', 'By Rurality'], 2);
-	$('#vis0').html(template0.format("Infrastructure", "main", copy00, copy01, m));
-	$('#vis1').html(template0.format("Infrastructure", "test", "one", "two!", m));
-	$('#vis2').html(template0.format("Infrastructure", "test", "one", "two!", m));
+	$('#vis0').html(template0.format("Infrastructure Choices", "main", copy00, copy01, m));
+	$('#vis1').html(template0.format("Infrastructure Choices", "test", "one", "two!", m));
+	$('#vis2').html(template0.format("Infrastructure Choices", "test", "one", "two!", m));
 	$('#vis3').html(template0.format("Burden of Disease", "test", "one", "two!", []));
 
 	// set up handlers

@@ -8,9 +8,14 @@
 // X create title
 // X create colors
 // X create menu
-// create first real pass re solar w text
+// X create first real pass re solar w text
 // redo text, make center, make labels
 // fonts
+
+// PAPERCUTS:
+// doughnut center text
+// line width for small samples
+// largest in color w rest descending grey
 
 //INTRO
 var vid1;
