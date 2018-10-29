@@ -85,14 +85,21 @@
 //~ 11. OTHER (SPECIFY)
 
 data.nigeria = [];
+data.nigeriaF = {}; // nigeria filtered
 
-d3.queue()
-	.defer(d3.csv, 'data/sect1_plantingw3.csv')
-	.defer(d3.csv, 'data/sect11_plantingw3.csv')
-	// .defer(d3.csv, 'data/sectc1_plantingw3.csv')
-	.defer(d3.csv, 'data/nga_householdgeovars_y3.csv')
-	.await(processData);
-
+// use each time you need new filtered data
+// then turn off
+// if (true) {
+if (false) {
+	d3.queue()
+		.defer(d3.csv, 'data/sect1_plantingw3.csv')
+		.defer(d3.csv, 'data/sect11_plantingw3.csv')
+		// .defer(d3.csv, 'data/sectc1_plantingw3.csv')
+		.defer(d3.csv, 'data/nga_householdgeovars_y3.csv')
+		.await(processData);
+} else {
+	data.nigeriaF = {"eConnW":0.0010905125408942203,"eConnM":0.0018949648077964266,"solarW":0.6194111232279171,"solarM":0.5043313481321061};
+}
 function processData(e,data1, data2, data3) {
 	// console.log(data1, data2, data3);
 	
@@ -151,5 +158,13 @@ function processData(e,data1, data2, data3) {
 	console.log("percent solar w vs m", ws/w, ms/m);
 	console.log("e lighting src w vs m", wl/w, ml/m);
 	console.log("e cooking src  w vs m", wc/w, mc/m);
-
+	
+	data.nigeriaF.eConnW = we/w; 
+	data.nigeriaF.eConnM = me/m;
+	data.nigeriaF.solarW = ws/w; 
+	data.nigeriaF.solarM = ms/m;
+	
+	// write data structure to window
+	$('body').html(JSON.stringify(data.nigeriaF));
+	
 }

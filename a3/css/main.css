@@ -7,7 +7,18 @@ svg {
 	cursor: pointer;
 }
 
+.intro {
+  padding-top: 45vh;
+}
+
 /* BOOTSTRAP */ 
+.menuOpts{
+	cursor: pointer;
+}
+
+.menuOpts[data-active]{
+	opacity: 1;  /* TODO too much hassle - do it later if you have time*/
+}
 
 /* Remove the navbar's default margin-bottom and rounded borders */ 
 .navbar {
@@ -20,9 +31,15 @@ svg {
 
 /* Set gray background color and 100% height */
 .sidenav {
-	padding-top: 20px;
+	/* padding-top: 20px; */
 	bbackground-color: #f1f1f1;
 	height: 100%;
+}
+
+.well {
+  font-size: 2vh;
+	background-color: #ced7dd !important;
+	border: none !important;
 }
 
 /* Set black background color, white text and some padding
@@ -39,4 +56,61 @@ footer {
 		padding: 15px;
 	}
 	.row.content {height:auto;} 
+}
+
+/* INTRO VIDEO */
+#title-back {
+	margin-left: 5%;
+	width: 50%;
+	background-color: #AFAFAF;
+	border-radius: 5px;
+	opacity: .5;
+}
+
+#myVideo{
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	top:0;
+	right:0;
+	width: 100%;
+	height: 100%;
+	background-size: 100% 100%;
+	background-color: black; /* in case the video doesn't fit the whole page*/
+		background-image: /* our video */;
+		background-position: center center;
+		background-size: contain;
+		object-fit: cover; /*cover video background */
+		z-index:3;
+}
+
+/* Layer with position absolute in order to have it over the video
+* --------------------------------------- */
+#section0 .layer{
+	position: absolute;
+	z-index: 4;
+	width: 100%;
+	left: 0;
+	top: 43%;
+
+	/*
+	* Preventing flicker on some browsers
+	* See http://stackoverflow.com/a/36671466/1081396  or issue #183
+	*/
+	-webkit-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+}
+
+/*solves problem with overflowing video in Mac with Chrome */
+#section0{
+	overflow: hidden;
+}
+
+
+/* Hiding video controls
+* See: https://css-tricks.com/custom-controls-in-html5-video-full-screen/
+* --------------------------------------- */
+video::-webkit-media-controls {
+  display:none !important;
 }
