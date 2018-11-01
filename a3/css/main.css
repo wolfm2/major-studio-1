@@ -43,8 +43,19 @@ svg {
 
 .well {
   font-size: 2vh;
-	background-color: #ced7dd !important;
-	border: none !important;
+	background-color: transparent;
+	border: none;
+  text-align: left;
+	text-align: justify;
+	text-justify: inter-word;
+}
+
+.tooltip {
+  font-size: 1.5em;
+  color: #AFAFAF;
+  background-color: black;
+  border-radius: 4px;
+  padding: .3em;
 }
 
 /* Set black background color, white text and some padding

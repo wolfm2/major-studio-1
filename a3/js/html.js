@@ -95,8 +95,8 @@ function initHtml () {
 	copy01 = copyTemp01.format(d.HeadW, d.HeadM, d.solarW , d.solarM, parseInt((100/d.solarPcM)*d.solarPcW-100));
 	
 	var m = mkMenu(['By Gender', 'By Education', 'By Rurality'], 2);
-	$('#vis0').html(template0.format("Infrastructure Choices", "main", copy00, copy01, m));
-	$('#vis1').html(template0.format("Infrastructure Choices", "test", "one", "two!", m));
+	$('#vis0').html(template0.format("Infrastructure Choices: Grid Electricity", "eConn", copy00, copy01, m));
+	$('#vis1').html(template0.format("Infrastructure Choices: Lighting by Parental Education", "lightEdu", "one", data.nigeriaF.hhFEeduMOLightCopy, m));
 	$('#vis2').html(template0.format("Infrastructure Choices", "test", "one", "two!", m));
 	$('#vis3').html(template0.format("Burden of Disease", "test", "one", "two!", []));
 
