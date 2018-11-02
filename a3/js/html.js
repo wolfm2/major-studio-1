@@ -86,19 +86,20 @@ function mkMenu(names, sect) {
 	return (html);
 }
 
-var copy00 = 'This series derives from World Bank\'s <b>Living Standards Measurement Study</b> (LSMS).  The data here is from the third wave of the LSMS and covers location, education, and consuming habits of the respondents';
-var copyTemp01 = 'Of the total head of household respondents, <b>{0}</b> were female and <b>{1}</b> were male. <b>{2}</b> of female reported using a solar panel for their power needs whereas <b>{3}</b> of men did. This means that female heads of households were <b>{4}%</b> more likely to invest in solar than their male counterparts.';
-var copy01;
+var copy00 = 'This series derives from World Bank\'s <b>Living Standards Measurement Study</b> (LSMS).  The data here is from the 2015-2016 third wave panel of the LSMS and covers location, education, and consuming habits of the respondents';
 
 function initHtml () {
 	var d = data.nigeriaF;
-	copy01 = copyTemp01.format(d.HeadW, d.HeadM, d.solarW , d.solarM, parseInt((100/d.solarPcM)*d.solarPcW-100));
 	
 	var m = mkMenu(['By Gender', 'By Education', 'By Rurality'], 2);
-	$('#vis0').html(template0.format("Infrastructure Choices: Grid Electricity", "eConn", copy00, copy01, m));
-	$('#vis1').html(template0.format("Infrastructure Choices: Lighting by Parental Education", "lightEdu", "one", data.nigeriaF.hhFEeduMOLightCopy, m));
-	$('#vis2').html(template0.format("Infrastructure Choices", "test", "one", "two!", m));
-	$('#vis3').html(template0.format("Burden of Disease", "test", "one", "two!", []));
+	
+	$('#vis0').html(template0.format("Infrastructure Choices: Grid Electricity - Gender", "eConn", copy00, data.nigeriaF.eConnCopy, m));
+	$('#vis1').html(template0.format("Infrastructure Choices: Lighting - Parental Education", "lightEdu", copy00, data.nigeriaF.hhFEeduMOLightCopy, m));
+	$('#vis2').html(template0.format("Infrastructure Choices: Men's Cooking Fuel - Mothers Education", "cookEduMo", copy00, data.nigeriaF.hhMAeduCookCopy, m));
+	$('#vis3').html(template0.format("Infrastructure Choices: Lighting - Gender & Road Access", "lightDistRoad", copy00, data.nigeriaF.hhBoDistRoadCopy, m));
+	$('#vis4').html(template0.format("Infrastructure Choices: Kerosene - Gender & Urban Access", "cookDistPop", copy00, data.nigeriaF.hhBoDistPopCopy, m));
+
+	$('#vis5').html(template0.format("Burden of Disease", "test", "one", "two!", []));
 
 	// set up handlers
 	$('.menuOpts').on('click', (e) => {

@@ -32,25 +32,22 @@
 //INTRO
 var vid1;
 
-// preloads next vid
-$('#myVideo').on('play', () => {
-	$.ajax( "img/LightBulb1.mp4", function( data ) {
-		vid1= URL.createObjectURL(data);
-		});
-	});
+//~ // preloads next vid
+//~ $('#myVideo').on('play', () => {
+	//~ $.ajax( "img/LightBulb1.mp4", function( data ) {
+		//~ vid1= URL.createObjectURL(data);
+		//~ });
+	//~ });
 
-// won't play seamlessly - fix
-$('#myVideo').on('ended', () => {
-  $('#myVideo source').attr('src', 'img/LightBulb1.mp4');
-  //$('#myVideo source').attr('src', vid1);
-	$('#myVideo').attr("loop", true);
-	$("#myVideo")[0].load();
-	$("#myVideo")[0].play();
-	$('#myVideo').off('ended');
-	});
-
-// VIS0
-var PI = Math.PI;
+//~ // won't play seamlessly - fix
+//~ $('#myVideo').on('ended', () => {
+  //~ $('#myVideo source').attr('src', 'img/LightBulb1.mp4');
+  //~ //$('#myVideo source').attr('src', vid1);
+	//~ $('#myVideo').attr("loop", true);
+	//~ $("#myVideo")[0].load();
+	//~ $("#myVideo")[0].play();
+	//~ $('#myVideo').off('ended');
+	//~ });
 
 function cascadeChildren (sec, parent, animation) {
 }
@@ -58,18 +55,34 @@ function cascadeChildren (sec, parent, animation) {
 var arcMax = 0.75; // percent of circle considered max
 
 var arcGLineBuf;
-var arcMinRadius;
+var arcMaxRadius;
 
 function calcSizeVis0() {
 	constraint = vis0svgW<vis0svgH?vis0svgW:vis0svgH; // get the smaller one
 	
-	arcMinRadius = constraint*.30;
-	arcGLineBuf = arcMinRadius*.1;
+	arcMaxRadius = constraint*.40; // maximum arc radius
+	arcGLineBuf = arcMaxRadius*.1; // width of bar + space
+	arcGLine = arcGLineBuf*.7; // width of bar
 }
 
-// generic doughnut bars 
+// Generic Vis Utils
+var PI = Math.PI;
+
+function visFilter(d, n) { 
+	factor = 1/_.max(d); // scale factor
+	
+	d.forEach((e,i) => {
+		n[i] += ' ' + parseInt(d[i]*100) + '%';
+		d[i] *= factor;
+		}) ;
+} 
+
+// Doughnut Bars 
 function dnutVis(id, vData, vName) {
-	dnf = data.nigeriaF
+	var dnf = data.nigeriaF
+	
+	var localMax = parseInt(_.max(vData)*100);
+	visFilter(vData, vName); // scale / mod data
 	
 	s = d3.select(id);
 	
@@ -84,16 +97,17 @@ function dnutVis(id, vData, vName) {
 		.append(mal0Wrapper); // add innermost 
 		
 	cTxt = s.append("g") // CENTER TEXT
-    .attr('class', 'dCenterTxt');
     
 	cTxt.append('text')
-		.style("transform", "translate("+ vis0svgW/2 +'px,'+ ((vis0svgH/2)-(vis0svgH*.04)) +"px)").append('tspan')
-    .text('Total')
+		.attr('id', 'center-label')
+		.style("transform", "translate("+ vis0svgW/2 +'px,'+ ((vis0svgH/2)-(vis0svgH*.03)) +"px)").append('tspan')
+    .text('Maximum:')
     
   cTxt.append('text')
-		.style("transform", "translate("+ vis0svgW/2 +'px,'+ ((vis0svgH/2)+(vis0svgH*.09)) +"px)").append('tspan')
+    .attr('id', 'center-num')
+		.style("transform", "translate("+ vis0svgW/2 +'px,'+ ((vis0svgH/2)+(vis0svgH*.05)) +"px)").append('tspan')
     // .text(parseInt(((dnf.eConnW+dnf.eConnM)/(dnf.HeadM+dnf.HeadW)) * 100) + '%');
-    .text('Focus difference' + '%');
+    .text(localMax + '%');
     
   s.append("g") // LEGEND
     .attr('class', 'dLegend')
@@ -102,15 +116,18 @@ function dnutVis(id, vData, vName) {
     .data(vName)
     .enter()
     .append('text')
-    .style("transform", (d, i) => { return "translate("+ (vis0svgW/2 - 10) +'px,'+ ((vis0svgH/2-arcMinRadius)-arcGLineBuf*i) +"px)"; })
+    .style('font-size', arcGLineBuf + 'px')
+    .style("transform", (d, i) => { return "translate("+ (vis0svgW/2 - 10) +'px,'+ ((vis0svgH/2-arcMaxRadius)+arcGLineBuf*i) +"px)"; })
     .text((d) => {return d;})
     .exit();
 }
 
 // mArkL0 wrapper
+// receives only d,i
+// uses constants for all other necessary vars
 function mal0Wrapper(d,i) {
 	calcSizeVis0();
-	path = mArkL0(vis0svgW/2, vis0svgH/2, arcMinRadius+(i*arcGLineBuf), arcGLineBuf*.8, '#718c9e', d);
+	path = mArkL0(vis0svgW/2, vis0svgH/2, arcMaxRadius-(i*arcGLineBuf), arcGLine, '#718c9e', d);
 	return path;
 }
 
@@ -129,6 +146,7 @@ function mArkL0(cx, cy, r, width, color, value) {
 	var e = document.createElementNS('http://www.w3.org/2000/svg', "path");
 
 	d3.select(e)
+		//.attr('class', 'arc')
 		.attr("transform", "translate("+ cx +','+ cy +")")
 		.attr("fill", color)
 		.attr("d", d3.arc()
@@ -138,32 +156,25 @@ function mArkL0(cx, cy, r, width, color, value) {
 				.startAngle(0 * (PI/180))
 				.endAngle(value * (PI/180) * 360)
 				)
-		// TOOLTIPS
-		.style('cursor', 'pointer')
-    .on('mouseover', d => {
-      div
-        .transition()
-        .duration(200)
-        .style('opacity', 0.9);
-      div
-        .html('Total: ' + parseInt(value*100) + '%')
-        .style('left', d3.event.pageX + 20 + 'px')
-        .style('top', d3.event.pageY + 'px');
-    })
-    .on('mouseout', () => {
-      div
-        .transition()
-        .duration(500)
-        .style('opacity', 0);
-    });
+		//~ // TOOLTIPS					WENT FOR INLINE VALS INSTEAD
+		//~ .style('cursor', 'pointer')
+    //~ .on('mouseover', d => {
+      //~ div
+        //~ .transition()
+        //~ .duration(200)
+        //~ .style('opacity', 0.9);
+      //~ div
+        //~ .html('Total: ' + parseInt(value*100) + '%')
+        //~ .style('left', d3.event.pageX + 20 + 'px')
+        //~ .style('top', d3.event.pageY + 'px');
+    //~ })
+    //~ .on('mouseout', () => {
+      //~ div
+        //~ .transition()
+        //~ .duration(500)
+        //~ .style('opacity', 0);
+    //~ });
 		
 	return e;
 }
-
-function mArkL1 () { // make concentric arc group
-}
-
-function mArkL2 () { // make arc group group (several sets of arcs)
-}
-
 

@@ -21,6 +21,20 @@ function initVis1() {
 	dnutVis("#lightEdu", data.nigeriaF.hhFEeduMOLightData, data.nigeriaF.hhFEeduMOLightName);
 }
 
+function initVis2() {
+	dnutVis("#cookEduMo", data.nigeriaF.hhMAeduCookData, data.nigeriaF.hhMAeduCookName);
+}
+
+function initVis3() {
+	dnutVis("#lightDistRoad", data.nigeriaF.hhBoDistRoadData, data.nigeriaF.hhBoDistRoadName);
+}
+
+
+function initVis4() {
+	dnutVis("#cookDistPop", data.nigeriaF.hhBoDistPopData, data.nigeriaF.hhBoDistPopName);
+}
+
+
 // Sources
 
 var data = [];
@@ -29,8 +43,13 @@ $(document).ready(function(){
 	initData();
 	initHtml();
 	calcSizes();
+	
 	initVis0();
 	initVis1();
+	initVis2();
+	initVis3();
+	initVis4();
+	
 	initFullPage();
 });
 
