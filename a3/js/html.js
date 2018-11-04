@@ -100,7 +100,7 @@ function initHtml () {
 	$('#vis3').html(template0.format("Infrastructure Choices: Lighting - Gender & Road Access", "lightDistRoad", copy00, data.nigeriaF.hhBoDistRoadCopy, m));
 	$('#vis4').html(template0.format("Infrastructure Choices: Kerosene - Gender & Urban Access", "cookDistPop", copy00, data.nigeriaF.hhBoDistPopCopy, m));
 
-	$('#vis5').html(template0.format("Burden of Disease", "test", "one", "two!", []));
+	$('#vis5').html(template0.format("Burden of Disease", "disease0", "one", "two!", []));
 
 	// set up handlers
 	$('.menuOpts').on('click', (e) => {

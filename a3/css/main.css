@@ -168,3 +168,20 @@ video::-webkit-media-controls {
 		font-size: 3rem;
 		color: #777777 !important;
 }
+
+/* Disease graph */
+.line {
+    fill: none;
+    stroke: #ffab00;
+    stroke-width: 4.5;
+}
+  
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.dot {
+    fill: #ffab00;
+    stroke: #fff;
+}
