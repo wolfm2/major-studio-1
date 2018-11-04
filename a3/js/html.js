@@ -91,7 +91,8 @@ var copy00 = 'This series derives from World Bank\'s <b>Living Standards Measure
 function initHtml () {
 	var d = data.nigeriaF;
 	
-	var m = mkMenu(['By Gender', 'By Education', 'By Rurality'], 2);
+	// var m = mkMenu(['By Gender', 'By Education', 'By Rurality'], 2);
+	var m = mkMenu([], 2);
 	
 	$('#vis0').html(template0.format("Infrastructure Choices: Grid Electricity - Gender", "eConn", copy00, data.nigeriaF.eConnCopy, m));
 	$('#vis1').html(template0.format("Infrastructure Choices: Lighting - Parental Education", "lightEdu", copy00, data.nigeriaF.hhFEeduMOLightCopy, m));
@@ -113,12 +114,42 @@ function initHtml () {
 	
 }
 
+//~ function aaddSlidesNavigation(section, numSlides){
+        //~ section.append('<div class="fp-slidesNav"><ul></ul></div>');
+        //~ var nav = section.find('.fp-slidesNav');
+
+        //~ //top or bottom
+        //~ //nav.addClass(options.slidesNavPosition);
+
+        //~ for(var i=0; i< numSlides; i++){
+            //~ //nav.find('ul').append('<li><a href="#" title="'+ tooltip[i] +'"><span></span></a></li>');
+
+            //~ // Only add tooltip if needed (defined by user)
+            //~ var tooltip = ['1','2','3','4','5'][i]; //options.horizontalNavigationToolTip[i];
+
+            //~ // var li = '<li><a class="tooltips" href="#"><span></span><div><img src="images/tooltip/'+ tooltip +'.png" /></span></div></a>';
+            //~ var li = '<li><a class="tooltips" href="#"><span></span><div>'+ tooltip +'"</span></div></a>';
+            //~ li += '</li>';
+
+            //~ nav.find('ul').append(li);
+        //~ }
+
+        //~ //centering it
+        //~ nav.css('margin-left', '-' + (nav.width()/2) + 'px');
+
+        //~ nav.find('li').first().find('a').addClass('active');
+    //~ }
+
 function initFullPage() {
 	//initialising fullpage.js in the jQuery way
 	$('#fullpage').fullpage({
 			sectionsColor: '#333333', // ['#ff5f45', '#0798ec', '#fc6c7c', '#fec401'],
 			navigation: true,
 			slidesNavigation: true,
+			licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
+			controlArrows: false,
+			navigationTooltips: ['Title','Context','Fuel','Disease','e','Sources'],
+			horizontalNavigationToolTip: ['tooltip1','tooltip2','Fuel','Disease','e','Sources'],
 	});
 
 	// calling fullpage.js methods using jQuery

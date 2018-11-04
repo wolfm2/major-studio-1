@@ -47,7 +47,7 @@ svg {
 }
 
 .well {
-  font-size: 2vh;
+  font-size: 1.8vh;
 	background-color: transparent;
 	border: none;
   text-align: left;
@@ -110,9 +110,10 @@ footer {
 #section0 .layer{
 	position: absolute;
 	z-index: 4;
-	width: 100%;
+	width: 70%;
 	left: 0;
-	top: 43%;
+	top: 6%;
+	opacity: .4;
 
 	/*
 	* Preventing flicker on some browsers
@@ -122,6 +123,15 @@ footer {
 	-ms-transform: translate3d(0,0,0);
 	transform: translate3d(0,0,0);
 }
+
+.fp-tooltip {
+	color: #232323 !important;
+}
+
+#section0 .layer h1{
+	color: #000000;
+}
+
 
 /*solves problem with overflowing video in Mac with Chrome */
 #section0{
@@ -140,4 +150,21 @@ video::-webkit-media-controls {
 	padding: 10% 20% 10% 20% !important;
 	font-size: 1rem;
 	text-align: justify;
+}
+
+#mytooltip {
+  font-size: 14px;
+  color: black !important;
+	background-color: transparent !important;
+}
+
+.navbar-inverse {
+		font-size: 2rem;
+    background-color: transparent; 
+    border-color: transparent; 
+}
+
+.navbar-brand {
+		font-size: 3rem;
+		color: #777777 !important;
 }

@@ -78,7 +78,7 @@ function visFilter(d, n) {
 } 
 
 // Doughnut Bars 
-function dnutVis(id, vData, vName) {
+function dnutVis(id, vData, vName, vColor) {
 	var dnf = data.nigeriaF
 	
 	var localMax = parseInt(_.max(vData)*100);
@@ -93,7 +93,7 @@ function dnutVis(id, vData, vName) {
 	
 	dnf = data.nigeriaF
 	s.append("g").selectAll("path")
-		.data(vData).enter()
+		.data(_.zip(vData, vColor)).enter()
 		.append(mal0Wrapper); // add innermost 
 		
 	cTxt = s.append("g") // CENTER TEXT
@@ -120,6 +120,17 @@ function dnutVis(id, vData, vName) {
     .style("transform", (d, i) => { return "translate("+ (vis0svgW/2 - 10) +'px,'+ ((vis0svgH/2-arcMaxRadius)+arcGLineBuf*i) +"px)"; })
     .text((d) => {return d;})
     .exit();
+  
+  // box behind legend
+  var bbox = d3.select(id).select(".dLegend").node().getBBox();
+	var padding = 2;
+	var rect = d3.select(id).select('.dLegend').insert('rect', 'text' ).attr("x", bbox.x - padding)
+    .attr("y", bbox.y - padding)
+    .attr("width", bbox.width + (padding*2))
+    .attr("height", bbox.height + (padding*2))
+    .style("opacity", ".5")
+    .style("fill", '#cfcfcf');
+  
 }
 
 // mArkL0 wrapper
@@ -127,7 +138,7 @@ function dnutVis(id, vData, vName) {
 // uses constants for all other necessary vars
 function mal0Wrapper(d,i) {
 	calcSizeVis0();
-	path = mArkL0(vis0svgW/2, vis0svgH/2, arcMaxRadius-(i*arcGLineBuf), arcGLine, '#718c9e', d);
+	path = mArkL0(vis0svgW/2, vis0svgH/2, arcMaxRadius-(i*arcGLineBuf), arcGLine, labC[d[1]], d[0]);
 	return path;
 }
 

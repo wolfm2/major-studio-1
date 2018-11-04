@@ -114,7 +114,7 @@ function initData() {
 			.await(processData);
 	} else {
 			data.nigeriaF = 
-{"HeadW":917,"HeadM":3694,"eConnData":[0.6194111232279171,0.5043313481321061],"eConnName":["Women","Men"],"eConnCopy":"Of the total head of household respondents, <b>917</b> were female and <b>3694</b> were male. <b>61% of female reported having a grid electrical connection</b> versus only <b>50% of men</b>.","hhFEeduMOLightData":[0.5700000000000001,0.28,0.13,0.17],"hhFEeduMOLightName":["Women/Educated Mothers","Women/Educated Fathers","Men/Educated Mothers","Men/Educated Fathers"],"hhFEeduMOLightCopy":"Parents education can also effect childrens decisions.  In particular, the paring of a <b>female heads of household with p6 educated mothers are at least 29% more likely to choose grid electricity</b> than all other combinations.  A similar but deminished effect can be seen for males with educated fathers.","hhMAeduCookData":[0.11,0.07],"hhMAeduCookName":["No education","P6 educated"],"hhMAeduCookCopy":"When choosing cooking fuels, male head of households show a <b>5% greater preference for kerosene when their mothers have no formal education</b> verses mothers educated at the P6 level.","hhBoDistRoadData":[0.23,0.15,0.09,0.16,0.17,0.04],"hhBoDistRoadName":["Women/10km","Women/20km","Women/30km ","Men/10km","Men/20km","Men/30Km "],"hhBoDistRoadCopy":"At <b>0-10km from the nearest road, women show a 7% preference for electric lighting</b>. They also lead at the 20-30km  mark, while between 10-20km the genders are in rough parity.","hhBoDistPopData":[0.07,0.06,0.13,0.13,0.11,0.03],"hhBoDistPopName":["Men/Wood","Women/Wood","Men/Coal","Women/Coal","Men/Kerosene","Women/Kerosene"],"hhBoDistPopCopy":"When greater than <b>25km from a population center </b>coal and purchased wood usage remain in parity between genders, <b>kerosene however, is %8 less frequently chosen by women</b> than men."}
+{"HeadW":917,"HeadM":3694,"eConnData":[0.6194111232279171,0.5043313481321061],"eConnName":["Women","Men"],"eConnCopy":"Of the total head of household respondents, <b>917</b> were female and <b>3694</b> were male. <b>61% of female reported having a grid electrical connection</b> versus only <b>50% of men</b>.","hhFEeduMOLightData":[0.5700000000000001,0.28,0.13,0.17],"hhFEeduMOLightName":["Women/Educated Mothers","Women/Educated Fathers","Men/Educated Mothers","Men/Educated Fathers"],"hhFEeduMOLightCopy":"Parents education can also effect children's decisions.  In particular, the paring of a <b>female heads of household with p6 educated mothers are at least 29% more likely to choose grid electricity</b> than all other combinations.  A similar but deminished effect can be seen for males with educated fathers.","hhMAeduCookData":[0.11,0.07],"hhMAeduCookName":["No education","P6 educated"],"hhMAeduCookCopy":"When choosing cooking fuels, male head of households show a <b>5% reduced preference for kerosene when their mothers have finished a P6 level</b> versus mothers with no education.","hhBoDistRoadData":[0.23,0.15,0.09,0.16,0.17,0.04],"hhBoDistRoadName":["Women/10km","Women/20km","Women/30km         ","Men/10km","Men/20km","Men/30Km  "],"hhBoDistRoadCopy":"At <b>0-10km from the nearest road, women show a 7% preference for electric lighting</b> versus men. They also lead at the 20-30km  mark, while between 10-20km the genders are in rough parity.","hhBoDistPopData":[0.07,0.06,0.13,0.13,0.11,0.03],"hhBoDistPopName":["Men/Wood","Women/Wood","Men/Coal","Women/Coal","Men/Kerosene","Women/Kerosene"],"hhBoDistPopCopy":"When greater than <b>25km from a population center </b>coal and purchased wood usage remain in parity between genders, <b>kerosene however, is 8% less frequently chosen by women</b> than men."}
 	}
 }
 
@@ -257,7 +257,7 @@ function processData(e, data0, data1, data2, data3) {
 		_.sum(vDataRepo['hhm-eduFa-Light'][5].slice(8))
 		];
 	dnf.hhFEeduMOLightName = ['Women/Educated Mothers', 'Women/Educated Fathers', 'Men/Educated Mothers', 'Men/Educated Fathers'];
-	dnf.hhFEeduMOLightCopy = "Parents education can also effect childrens decisions.  In particular, the paring of a <b>female heads of household with p6 educated mothers are at least 29% more likely to choose grid electricity</b> than all other combinations.  A similar but deminished effect can be seen for males with educated fathers.";
+	dnf.hhFEeduMOLightCopy = "Parents education can also effect children's decisions.  In particular, the paring of a <b>female heads of household with p6 educated mothers are at least 29% more likely to choose grid electricity</b> than all other combinations.  A similar but deminished effect can be seen for males with educated fathers.";
 
 	// TAKEAWAY = Mothers edu tracks with grid uptake for lighting, no story w Dad Edu
 	//~ console.log(dnf.genEdu.thhFeduML, dnf.genEdu.hhFeduML, dnf.genEdu.thhMeduML, dnf.genEdu.hhMeduML, 
@@ -292,7 +292,7 @@ function processData(e, data0, data1, data2, data3) {
 		vDataRepo['hhm-eduMo-Cook'][5][8]
 		];
 	dnf.hhMAeduCookName = ['No education', 'P6 educated'];
-	dnf.hhMAeduCookCopy = "When choosing cooking fuels, male head of households show a <b>5% greater preference for kerosene when their mothers have no formal education</b> verses mothers educated at the P6 level.";
+	dnf.hhMAeduCookCopy = "When choosing cooking fuels, male head of households show a <b>5% reduced preference for kerosene when their mothers have finished a P6 level</b> versus mothers with no education.";
 
 	// Takeaway = Women hh are especially negatively affected by low dad edu when chosing cooking fuel
 	//~ console.log(dnf.genEdu.thhFeduMC, dnf.genEdu.hhFeduMC, dnf.genEdu.thhMeduMC, dnf.genEdu.hhMeduMC, 
@@ -390,7 +390,7 @@ function processData(e, data0, data1, data2, data3) {
 													'Women/Coal', 
 													'Men/Kerosene', 
 													'Women/Kerosene'];
-	dnf.hhBoDistPopCopy = "When greater than <b>25km from a population center </b>coal and purchased wood usage remain in parity between genders, <b>kerosene however, is %8 less frequently chosen by women</b> than men."
+	dnf.hhBoDistPopCopy = "When greater than <b>25km from a population center </b>coal and purchased wood usage remain in parity between genders, <b>kerosene however, is 8% less frequently chosen by women</b> than men."
 	
 	// write data structure to window
 	$('body').html('<xmp>' + JSON.stringify(dnf) + '</xmp>');
