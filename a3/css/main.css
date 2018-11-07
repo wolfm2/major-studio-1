@@ -154,8 +154,8 @@ video::-webkit-media-controls {
 
 #mytooltip {
   font-size: 14px;
-  color: black !important;
-	background-color: transparent !important;
+  color: white !important;
+	background-color: black !important;
 }
 
 .navbar-inverse {
@@ -173,7 +173,7 @@ video::-webkit-media-controls {
 .line {
     fill: none;
     stroke: #ffab00;
-    stroke-width: 4.5;
+    stroke-width: 6;
 }
   
 .overlay {
@@ -182,6 +182,6 @@ video::-webkit-media-controls {
 }
 
 .dot {
-    fill: #ffab00;
+    fill: #888888;
     stroke: #fff;
 }

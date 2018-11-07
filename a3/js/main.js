@@ -72,6 +72,8 @@ $(document).ready(function(){
 	initVis3();
 	initVis4();
 	
+	initDiseaseData();
+	
 	initFullPage();
 	
 	// my fullpage hack to add tooltips

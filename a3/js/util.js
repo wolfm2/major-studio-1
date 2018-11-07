@@ -15,15 +15,27 @@
 // X create first real pass re solar w text
 // X redo text, make center, make labels
 // X left justify 
-// Get other datapoints
-// do vis 2,3
-// do vis Burden of Disease
-// interstital text after title
-// multiple lines per hhid!
+// X Get other datapoints
+// X do vis 2,3
+// X do vis Burden of Disease
+// X interstital text after title
+// X multiple lines per hhid!
 
-// remove titlebar
-// move filters to right
-// change doughnut center text
+// X remove titlebar
+// X move filters to right
+// X change doughnut center text
+
+// X axis labels
+// X tooltips
+// X line labels
+// X line colors
+// narrative text
+// sources
+// scaling of svgs
+
+// donut animations
+// X graph animations
+// one svg?
 
 // PAPERCUTS:
 // doughnut center text
