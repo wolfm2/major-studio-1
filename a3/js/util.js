@@ -30,16 +30,12 @@
 // X line labels
 // X line colors
 // narrative text
-// sources
+// X sources
 // scaling of svgs
 
 // donut animations
 // X graph animations
 // one svg?
-
-// PAPERCUTS:
-// doughnut center text
-// line width for small samples
 
 //INTRO
 var vid1;

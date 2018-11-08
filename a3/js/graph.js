@@ -7,7 +7,7 @@ var yScale;
 
 data.gbd = {
 	mainCopy: "This series is comprised of data from the Institute for Health Metrics and Evaluation (IHME). Specifically, their 2017 Global Burden of Disease dataset for all resperatory illness rates herein.",
-	asthmaCopy: 'The World Health Organization (WHO) has outlined several causes of death that are attributable to solid fuel and kerosene usage 111.  This graph explores the imbalance that exists in how these diseases affect Nigerian women since 2000.'
+	asthmaCopy: 'The World Health Organization (WHO) and PubMed has outlined several causes of death that are attributable to solid fuel and kerosene usage <sup>1,2</sup>.  This graph explores the imbalance that exists in how these diseases affect Nigerian women since 2007.'
 }
 
 function initDiseaseData() {

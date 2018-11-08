@@ -148,7 +148,7 @@ function initFullPage() {
 			slidesNavigation: true,
 			licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
 			controlArrows: false,
-			navigationTooltips: ['Title','Context','Fuel','Disease','e','Sources'],
+			navigationTooltips: ['Title','Context','Fuel','Disease','Summary','Sources'],
 			horizontalNavigationToolTip: ['tooltip1','tooltip2','Fuel','Disease','e','Sources'],
 	});
 
