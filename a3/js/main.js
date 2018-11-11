@@ -47,12 +47,12 @@ function initVis4() {
 
 function ttip(e) {
 	if (e.type == 'mouseenter') {
-		$('#mytooltip').html(e.data);
-		$('#mytooltip').css('left', event.pageX - 10)
+		$('#perl-tooltip').html(e.data);
+		$('#perl-tooltip').css('left', event.pageX - 10)
 			.css('top', event.pageY - 45)
 			.css('opacity', '1');		
 	} else {
-		$('#mytooltip')
+		$('#perl-tooltip')
 			.css('opacity', '0');		
 	}
 }
@@ -81,11 +81,18 @@ $(document).ready(function(){
 	slideNames.forEach((d,i) => {
 		$('.fp-bottom a:eq(' + i + ')').on('mouseenter mouseleave', null, d, ttip);
 		});
+		
+	// window.addEventListener('resize', scaleSVG);
 });
 
 $(window).resize(function() {
 	calcSizes();
   initVis0();
+  initVis1();
+  initVis2();
+  initVis3();
+  initVis4();
+  initDiseaseData()
 });
 
 

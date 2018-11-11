@@ -1,7 +1,7 @@
 // fullPage code and HTML element init
 
 var template0 = `
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" style='display: none;'>
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -38,13 +38,13 @@ var template0 = `
     </div>
 -->
     <div class="col-sm-6 text-left">
-      
+      <div class="navbar navbar-inverse">{0}</div>
 	    <svg id='{1}'></svg>
 	    
     </div>
     <div class="col-sm-6 sidenav">
 
-      <div class="col-sm-11 sidenav">
+      <div class="col-sm-11 sidenav well-container">
       <div class="well">
         <p>{2}</p>
         <hr>
@@ -94,11 +94,11 @@ function initHtml () {
 	// var m = mkMenu(['By Gender', 'By Education', 'By Rurality'], 2);
 	var m = mkMenu([], 2);
 	
-	$('#vis0').html(template0.format("Infrastructure Choices: Grid Electricity - Gender", "eConn", copy00, data.nigeriaF.eConnCopy, m));
-	$('#vis1').html(template0.format("Infrastructure Choices: Lighting - Parental Education", "lightEdu", copy00, data.nigeriaF.hhFEeduMOLightCopy, m));
+	$('#vis0').html(template0.format("Infrastructure Choices: Grid Electricity &mdash; Gender", "eConn", copy00, data.nigeriaF.eConnCopy, m));
+	$('#vis1').html(template0.format("Infrastructure Choices: Lighting &mdash; Parental Education", "lightEdu", copy00, data.nigeriaF.hhFEeduMOLightCopy, m));
 	$('#vis2').html(template0.format("Infrastructure Choices: Men's Cooking Fuel - Mothers Education", "cookEduMo", copy00, data.nigeriaF.hhMAeduCookCopy, m));
-	$('#vis3').html(template0.format("Infrastructure Choices: Lighting - Gender & Road Access", "lightDistRoad", copy00, data.nigeriaF.hhBoDistRoadCopy, m));
-	$('#vis4').html(template0.format("Infrastructure Choices: Kerosene - Gender & Urban Access", "cookDistPop", copy00, data.nigeriaF.hhBoDistPopCopy, m));
+	$('#vis3').html(template0.format("Infrastructure Choices: Lighting &mdash; Gender & Road Access", "lightDistRoad", copy00, data.nigeriaF.hhBoDistRoadCopy, m));
+	$('#vis4').html(template0.format("Infrastructure Choices: Kerosene &mdash; Gender & Urban Access", "cookDistPop", copy00, data.nigeriaF.hhBoDistPopCopy, m));
 
 	$('#vis5').html(template0.format("Burden of Disease", "disease0", data.gbd.mainCopy, data.gbd.asthmaCopy, []));
 

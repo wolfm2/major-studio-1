@@ -29,7 +29,7 @@
 // X tooltips
 // X line labels
 // X line colors
-// narrative text
+// X narrative text
 // X sources
 // scaling of svgs
 
@@ -60,6 +60,27 @@ var vid1;
 function cascadeChildren (sec, parent, animation) {
 }
 
+function scaleSVG() {
+		var w = window.innerWidth / vis0svgW;
+		var h = window.innerHeight / vis0svgH;
+		s = w<h?w:h;
+		
+		//~ tx = ((s * svgWidth) - svgWidth) /2;
+		//~ tx = 0;  // because it is centered
+		//~ ty = ((s * svgHeight) - svgHeight) / 2;
+		
+		// wtf does it scale the transform?
+		//~ tx *= (1 / s); // not completely right yet
+		//~ ty *= (1 / s); // unscale the transform.
+		
+		tx = 50 * (1 / s); // not completely right yet
+		ty = 50 * (1 / s); // unscale the transform.
+		
+		d3.selectAll("svg")
+		  .style('transform', 'scale(' + s +')');
+		//  .style('transform', 'scale(' + s +') translate(-'+ tx + '%,-' + ty +'%)');
+}
+
 var arcMax = 0.75; // percent of circle considered max
 
 var arcGLineBuf;
@@ -85,12 +106,19 @@ function visFilter(d, n) {
 		}) ;
 } 
 
+var visFilterDone = {};
+
 // Doughnut Bars 
 function dnutVis(id, vData, vName, vColor) {
 	var dnf = data.nigeriaF
 	
-	var localMax = parseInt(_.max(vData)*100);
-	visFilter(vData, vName); // scale / mod data
+	// only scale once
+	if (! (id in visFilterDone)) {
+		visFilterDone[id] = parseInt(_.max(vData)*100);
+		visFilter(vData, vName); // scale / mod data
+	}
+	
+	var localMax = visFilterDone[id];
 	
 	s = d3.select(id);
 	
@@ -129,6 +157,28 @@ function dnutVis(id, vData, vName, vColor) {
     .text((d) => {return d;})
     .exit();
   
+  // Create the svg:defs element and the main gradient definition.
+	var svgDefs = s.append('defs');
+
+	var mainGradient = svgDefs.append('linearGradient') // diagonal
+		.attr('id', 'mainGradient')
+		.attr("x1", "40%")
+		.attr("x2", "100%")
+		.attr("y1", "40%")
+		.attr("y2", "100%");
+
+	// Create the stops of the main gradient. Each stop will be assigned
+	// a class to style the stop using CSS.
+	mainGradient.append('stop')
+			.attr('class', 'stop-left')
+			.attr('offset', '0%');
+
+	mainGradient.append('stop')
+			.attr('class', 'stop-right')
+			.attr('offset', '100%');
+
+  
+  
   // box behind legend
   var bbox = d3.select(id).select(".dLegend").node().getBBox();
 	var padding = 2;
@@ -137,7 +187,8 @@ function dnutVis(id, vData, vName, vColor) {
     .attr("width", bbox.width + (padding*2))
     .attr("height", bbox.height + (padding*2))
     .style("opacity", ".5")
-    .style("fill", '#cfcfcf');
+    .classed('filled', true)
+    // .style("fill", '#cfcfcf');
   
 }
 
@@ -155,6 +206,13 @@ const div = d3
   .select('body')
   .append('div')
   .attr('id', 'mytooltip')
+  .attr('class', 'tooltip')
+  .style('opacity', 0);
+  
+const perlDiv = d3
+  .select('body')
+  .append('div')
+  .attr('id', 'perl-tooltip')
   .attr('class', 'tooltip')
   .style('opacity', 0);
 
