@@ -62,6 +62,8 @@ svg {
 	
 	display: table-cell !important;
 	vertical-align: middle !important;
+	
+	transition: all 0.5s;
 }
 
 #mytooltip {
@@ -107,6 +109,16 @@ footer {
 
 #title-back > h1 {
     font-size: 6rem;
+}
+
+h2 {
+  font-size: 6vh !important;
+}
+
+.highlight {
+	color: black;
+	font-weight: bold;
+	transition: all 0.5s;
 }
 
 #myVideo{

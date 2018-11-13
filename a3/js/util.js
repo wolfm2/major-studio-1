@@ -197,7 +197,7 @@ function dnutVis(id, vData, vName, vColor) {
 // uses constants for all other necessary vars
 function mal0Wrapper(d,i) {
 	calcSizeVis0();
-	path = mArkL0(vis0svgW/2, vis0svgH/2, arcMaxRadius-(i*arcGLineBuf), arcGLine, labC[d[1]], d[0]);
+	path = mArkL0(vis0svgW/2, vis0svgH/2, arcMaxRadius-(i*arcGLineBuf), arcGLine, labC[d[1]], d[0], i);
 	return path;
 }
 
@@ -219,11 +219,12 @@ const perlDiv = d3
 // make arc
 // width: line width
 // value: 0-1
-function mArkL0(cx, cy, r, width, color, value) { 
+function mArkL0(cx, cy, r, width, color, value, idx) { 
 	var e = document.createElementNS('http://www.w3.org/2000/svg', "path");
 
 	d3.select(e)
 		//.attr('class', 'arc')
+		.attr('data-idx', idx)
 		.attr("transform", "translate("+ cx +','+ cy +")")
 		.attr("fill", color)
 		.attr("d", d3.arc()
@@ -233,24 +234,17 @@ function mArkL0(cx, cy, r, width, color, value) {
 				.startAngle(0 * (PI/180))
 				.endAngle(value * (PI/180) * 360)
 				)
-		//~ // TOOLTIPS					WENT FOR INLINE VALS INSTEAD
-		//~ .style('cursor', 'pointer')
-    //~ .on('mouseover', d => {
-      //~ div
-        //~ .transition()
-        //~ .duration(200)
-        //~ .style('opacity', 0.9);
-      //~ div
-        //~ .html('Total: ' + parseInt(value*100) + '%')
-        //~ .style('left', d3.event.pageX + 20 + 'px')
-        //~ .style('top', d3.event.pageY + 'px');
-    //~ })
-    //~ .on('mouseout', () => {
-      //~ div
-        //~ .transition()
-        //~ .duration(500)
-        //~ .style('opacity', 0);
-    //~ });
+		.style('cursor', 'pointer')
+    .on('mouseover', function () { // Text Highlighting
+			var idx = d3.select(this).attr('data-idx'); // ring index
+			d3.selectAll('.highlight' + idx)
+				.classed('highlight', true);
+    })
+    .on('mouseout', function () {
+			var idx = d3.select(this).attr('data-idx'); // ring index
+      d3.selectAll('.highlight' + idx)
+				.classed('highlight', false);
+    });
 		
 	return e;
 }

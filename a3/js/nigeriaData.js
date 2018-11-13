@@ -114,7 +114,7 @@ function initData() {
 			.await(processData);
 	} else {
 			data.nigeriaF = 
-{"HeadW":917,"HeadM":3694,"eConnData":[0.6194111232279171,0.5043313481321061],"eConnName":["Women","Men"],"eConnCopy":"Of the total head of household respondents, <b>917</b> were female and <b>3694</b> were male. <b>61% of female reported having a grid electrical connection</b> versus only <b>50% of men</b>.","hhFEeduMOLightData":[0.5700000000000001,0.28,0.13,0.17],"hhFEeduMOLightName":["Women/Educated Mothers","Women/Educated Fathers","Men/Educated Mothers","Men/Educated Fathers"],"hhFEeduMOLightCopy":"Parents education can also effect children's decisions.  In particular, the paring of a <b>female heads of household with p6 educated mothers are at least 29% more likely to choose grid electricity</b> than all other combinations.  A similar but deminished effect can be seen for males with educated fathers.","hhMAeduCookData":[0.11,0.07],"hhMAeduCookName":["No education","P6 educated"],"hhMAeduCookCopy":"When choosing cooking fuels, male head of households show a <b>5% reduced preference for kerosene when their mothers have finished a P6 level</b> versus mothers with no education.","hhBoDistRoadData":[0.23,0.15,0.09,0.16,0.17,0.04],"hhBoDistRoadName":["Women/10km","Women/20km","Women/30km         ","Men/10km","Men/20km","Men/30Km  "],"hhBoDistRoadCopy":"At <b>0-10km from the nearest road, women show a 7% preference for electric lighting</b> versus men. They also lead at the 20-30km  mark, while between 10-20km the genders are in rough parity.","hhBoDistPopData":[0.07,0.06,0.13,0.13,0.11,0.03],"hhBoDistPopName":["Men/Wood","Women/Wood","Men/Coal","Women/Coal","Men/Kerosene","Women/Kerosene"],"hhBoDistPopCopy":"When greater than <b>25km from a population center </b>coal and purchased wood usage remain in parity between genders, <b>kerosene however, is 8% less frequently chosen by women</b> than men."}
+{"HeadW":917,"HeadM":3694,"eConnData":[0.6194111232279171,0.5043313481321061],"eConnName":["Women hh","Men hh"],"eConnCopy":"Of the total head of household respondents, <b>917</b> were female and <b>3694</b> were male. <b class=\"highlight0\">61% of female reported having a grid electrical connection</b> versus only <b class=\"highlight1\">50% of men</b>.","hhFEeduMOLightData":[0.5700000000000001,0.28,0.13,0.17],"hhFEeduMOLightName":["Mothers/Women hh","Fathers/Women hh","Mothers/Men hh","Fathers/Men hh"],"hhFEeduMOLightCopy":"Parents education can also effect children's decisions.  Most promisingly, <b><span class='highlight0'>female heads</span> of household with p6 educated mothers are at least <span class='highlight0'>29% more likely to choose grid electricity</span></b> than all other combinations.  <span class='highlight3'>A similar but deminished effect can be seen for males with educated fathers.</span>","hhMAeduCookData":[0.11,0.07],"hhMAeduCookName":["No education","P6 educated"],"hhMAeduCookCopy":"When choosing cooking fuels, <span class='highlight1'>male</span> head of households show a <b><span class='highlight1'>5% reduced preference</span> for kerosene when their mothers have finished a P6 level</b> versus mothers with no education.","hhBoDistRoadData":[0.23,0.15,0.09,0.16,0.17,0.04],"hhBoDistRoadName":["10km/Women hh","20km/Women hh","30km/Women hh ","10km/Men hh","20km/Men hh","30Km/Men hh "],"hhBoDistRoadCopy":"At <b><span class='highlight0 highlight2'>0-10km and 20-30km</span> from the nearest road, <span class='highlight0 highlight2'>women show a 7% and 5% greater preference</span> respectively for electric lighting</b> versus men. That said, between <span class='highlight1 highlight4'>10-20km the genders are in rough parity</span>.","hhBoDistPopData":[0.07,0.06,0.13,0.13,0.11,0.03],"hhBoDistPopName":["Men/Wood/Men hh","Wood/Women hh","Coal/Men hh","Coal/Women hh","Kerosene/Men hh","Kerosene/Women hh"],"hhBoDistPopCopy":"When greater than <b>25km from a population center </b><span class='highlight0 highlight1 highlight2 highlight3'>coal and purchased wood usage remain in parity</span> between genders, <b class='highlight5'>kerosene however, is 8% less frequently chosen by women</b> than men."}
 	}
 }
 
@@ -194,8 +194,8 @@ function processData(e, data0, data1, data2, data3) {
 	
 	// Connection to grid Percent
 	dnf.eConnData = [we/dnf.HeadW, me/dnf.HeadM];
-	dnf.eConnName = ['Women', 'Men'];
-	dnf.eConnCopy = 'Of the total head of household respondents, <b>917</b> were female and <b>3694</b> were male. <b>61% of female reported having a grid electrical connection</b> versus only <b>50% of men</b>.';
+	dnf.eConnName = ['Women hh', 'Men hh'];
+	dnf.eConnCopy = 'Of the total head of household respondents, <b>917</b> were female and <b>3694</b> were male. <b class="highlight0">61% of female reported having a grid electrical connection</b> versus only <b class="highlight1">50% of men</b>.';
 
 	
 	// TAKEAWAY = public grid uptake tracks w gender
@@ -256,8 +256,8 @@ function processData(e, data0, data1, data2, data3) {
 		_.sum(vDataRepo['hhm-eduMo-Light'][5].slice(8)),
 		_.sum(vDataRepo['hhm-eduFa-Light'][5].slice(8))
 		];
-	dnf.hhFEeduMOLightName = ['Women/Educated Mothers', 'Women/Educated Fathers', 'Men/Educated Mothers', 'Men/Educated Fathers'];
-	dnf.hhFEeduMOLightCopy = "Parents education can also effect children's decisions.  In particular, the paring of a <b>female heads of household with p6 educated mothers are at least 29% more likely to choose grid electricity</b> than all other combinations.  A similar but deminished effect can be seen for males with educated fathers.";
+	dnf.hhFEeduMOLightName = ['Mothers/Women hh', 'Fathers/Women hh', 'Mothers/Men hh', 'Fathers/Men hh'];
+	dnf.hhFEeduMOLightCopy = "Parents education can also effect children's decisions.  Most promisingly, <b><span class='highlight0'>female heads</span> of household with p6 educated mothers are at least <span class='highlight0'>29% more likely to choose grid electricity</span></b> than all other combinations.  <span class='highlight3'>A similar but deminished effect can be seen for males with educated fathers.</span>";
 
 	// TAKEAWAY = Mothers edu tracks with grid uptake for lighting, no story w Dad Edu
 	//~ console.log(dnf.genEdu.thhFeduML, dnf.genEdu.hhFeduML, dnf.genEdu.thhMeduML, dnf.genEdu.hhMeduML, 
@@ -292,7 +292,7 @@ function processData(e, data0, data1, data2, data3) {
 		vDataRepo['hhm-eduMo-Cook'][5][8]
 		];
 	dnf.hhMAeduCookName = ['No education', 'P6 educated'];
-	dnf.hhMAeduCookCopy = "When choosing cooking fuels, male head of households show a <b>5% reduced preference for kerosene when their mothers have finished a P6 level</b> versus mothers with no education.";
+	dnf.hhMAeduCookCopy = "When choosing cooking fuels, <span class='highlight1'>male</span> head of households show a <b><span class='highlight1'>5% reduced preference</span> for kerosene when their mothers have finished a P6 level</b> versus mothers with no education.";
 
 	// Takeaway = Women hh are especially negatively affected by low dad edu when chosing cooking fuel
 	//~ console.log(dnf.genEdu.thhFeduMC, dnf.genEdu.hhFeduMC, dnf.genEdu.thhMeduMC, dnf.genEdu.hhMeduMC, 
@@ -350,8 +350,8 @@ function processData(e, data0, data1, data2, data3) {
 		vDataRepo['hhm-DistRoad-Light'][5][1],
 		vDataRepo['hhm-DistRoad-Light'][5][2]
 		];
-	dnf.hhBoDistRoadName = ['Women/10km', 'Women/20km', 'Women/30km ', 'Men/10km', 'Men/20km', 'Men/30Km '];
-	dnf.hhBoDistRoadCopy = "At <b>0-10km from the nearest road, women show a 7% preference for electric lighting</b> versus men. They also lead at the 20-30km  mark, while between 10-20km the genders are in rough parity.";
+	dnf.hhBoDistRoadName = ['10km/Women hh', '20km/Women hh', '30km/Women hh ', '10km/Men hh', '20km/Men hh', '30Km/Men hh '];
+	dnf.hhBoDistRoadCopy = "At <b><span class='highlight0 highlight2'>0-10km and 20-30km</span> from the nearest road, <span class='highlight0 highlight2'>women show a 7% and 5% greater preference</span> respectively for electric lighting</b> versus men. That said, between <span class='highlight1 highlight4'>10-20km the genders are in rough parity</span>.";
 		
 	// COOKING USAGE
 	// NEAREST ROAD - Max: 68km
@@ -384,13 +384,13 @@ function processData(e, data0, data1, data2, data3) {
 		vDataRepo['hhf-DistPop-Cook'][5][1]
 		];
 	dnf.hhBoDistPopName = [
-													'Men/Wood', 
-													'Women/Wood',
-												  'Men/Coal', 
-													'Women/Coal', 
-													'Men/Kerosene', 
-													'Women/Kerosene'];
-	dnf.hhBoDistPopCopy = "When greater than <b>25km from a population center </b>coal and purchased wood usage remain in parity between genders, <b>kerosene however, is 8% less frequently chosen by women</b> than men."
+													'Men/Wood/Men hh', 
+													'Wood/Women hh',
+												  'Coal/Men hh', 
+													'Coal/Women hh', 
+													'Kerosene/Men hh', 
+													'Kerosene/Women hh'];
+	dnf.hhBoDistPopCopy = "When greater than <b>25km from a population center </b><span class='highlight0 highlight1 highlight2 highlight3'>coal and purchased wood usage remain in parity</span> between genders, <b class='highlight5'>kerosene however, is 8% less frequently chosen by women</b> than men."
 	
 	// write data structure to window
 	$('body').html('<xmp>' + JSON.stringify(dnf) + '</xmp>');

@@ -94,11 +94,11 @@ function initHtml () {
 	// var m = mkMenu(['By Gender', 'By Education', 'By Rurality'], 2);
 	var m = mkMenu([], 2);
 	
-	$('#vis0').html(template0.format("Infrastructure Choices: Grid Electricity &mdash; Gender", "eConn", copy00, data.nigeriaF.eConnCopy, m));
-	$('#vis1').html(template0.format("Infrastructure Choices: Lighting &mdash; Parental Education", "lightEdu", copy00, data.nigeriaF.hhFEeduMOLightCopy, m));
-	$('#vis2').html(template0.format("Infrastructure Choices: Men's Cooking Fuel - Mothers Education", "cookEduMo", copy00, data.nigeriaF.hhMAeduCookCopy, m));
-	$('#vis3').html(template0.format("Infrastructure Choices: Lighting &mdash; Gender & Road Access", "lightDistRoad", copy00, data.nigeriaF.hhBoDistRoadCopy, m));
-	$('#vis4').html(template0.format("Infrastructure Choices: Kerosene &mdash; Gender & Urban Access", "cookDistPop", copy00, data.nigeriaF.hhBoDistPopCopy, m));
+	$('#vis0').html(template0.format("Choosing Grid Electricity &mdash; Gender", "eConn", copy00, data.nigeriaF.eConnCopy, m));
+	$('#vis1').html(template0.format("P6 Parental Education &mdash; Lighting Fuel", "lightEdu", copy00, data.nigeriaF.hhFEeduMOLightCopy, m));
+	$('#vis2').html(template0.format("P6 Mother's Education &mdash; Men's Cooking Fuel", "cookEduMo", copy00, data.nigeriaF.hhMAeduCookCopy, m));
+	$('#vis3').html(template0.format("Road Access &mdash; Lighting Fuel", "lightDistRoad", copy00, data.nigeriaF.hhBoDistRoadCopy, m));
+	$('#vis4').html(template0.format("Urban Access &mdash; Kerosene Usage", "cookDistPop", copy00, data.nigeriaF.hhBoDistPopCopy, m));
 
 	$('#vis5').html(template0.format("Burden of Disease", "disease0", data.gbd.mainCopy, data.gbd.asthmaCopy, []));
 
@@ -148,7 +148,7 @@ function initFullPage() {
 			slidesNavigation: true,
 			licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
 			controlArrows: false,
-			navigationTooltips: ['Title','Context','Fuel','Disease','Summary','Sources'],
+			navigationTooltips: ['Title', 'Question', 'Context','Choices','Burden','Final','Sources'],
 			horizontalNavigationToolTip: ['tooltip1','tooltip2','Fuel','Disease','e','Sources'],
 	});
 
