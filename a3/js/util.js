@@ -1,8 +1,5 @@
 
 // TODO
-// fill out functions
-// enclose panels in div overflow hidden
-// recalc vis height for @media
 // fonts
 // colors
 // 	largest in color w rest descending grey
@@ -65,14 +62,6 @@ function scaleSVG() {
 		var h = window.innerHeight / vis0svgH;
 		s = w<h?w:h;
 		
-		//~ tx = ((s * svgWidth) - svgWidth) /2;
-		//~ tx = 0;  // because it is centered
-		//~ ty = ((s * svgHeight) - svgHeight) / 2;
-		
-		// wtf does it scale the transform?
-		//~ tx *= (1 / s); // not completely right yet
-		//~ ty *= (1 / s); // unscale the transform.
-		
 		tx = 50 * (1 / s); // not completely right yet
 		ty = 50 * (1 / s); // unscale the transform.
 		
@@ -110,6 +99,7 @@ var visFilterDone = {};
 
 // Doughnut Bars 
 function dnutVis(id, vData, vName, vColor) {
+	id = '#' + id;
 	var dnf = data.nigeriaF
 	
 	// only scale once
@@ -209,12 +199,12 @@ const div = d3
   .attr('class', 'tooltip')
   .style('opacity', 0);
   
-const perlDiv = d3
-  .select('body')
-  .append('div')
-  .attr('id', 'perl-tooltip')
-  .attr('class', 'tooltip')
-  .style('opacity', 0);
+//~ const perlDiv = d3
+  //~ .select('body')
+  //~ .append('div')
+  //~ .attr('id', 'perl-tooltip')
+  //~ .attr('class', 'tooltip')
+  //~ .style('opacity', 0);
 
 // make arc
 // width: line width

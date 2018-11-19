@@ -4,16 +4,44 @@
 * What is the definition of rural?
 * */
 
+function initFullPage() {
+	//initialising fullpage.js in the jQuery way
+	$('#fullpage').fullpage({
+			sectionsColor: '#333333', // ['#ff5f45', '#0798ec', '#fc6c7c', '#fec401'],
+			navigation: true,
+			slidesNavigation: true,
+			licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
+			controlArrows: false,
+			navigationTooltips: ['Title', 'Question', 'Context','Choices','Burden','Final','Sources'],
+	});
+
+	// calling fullpage.js methods using jQuery
+	$('#moveSectionUp').click(function(e){
+			e.preventDefault();
+			$.fn.fullpage.moveSectionUp();
+	});
+
+	$('#moveSectionDown').click(function(e){
+			e.preventDefault();
+			$.fn.fullpage.moveSectionDown();
+	});
+}
+
 var vis0svgW;
 var vis0svgH;
-var vis0tip;
+//~ var vis0tip;
 
 function calcSizes() {
-	vis0svgW = $("#eConn").parent().width();
+	var visibleSvg;
+	$('.vis').each((i, e) => {
+		if ($(e).is(":visible"))
+		  visibleSvg = e;
+		});
+	vis0svgW = $(visibleSvg).parent().width();
 	vis0svgH = $(window).height() * .85;
 }
 
-http://davidjohnstone.net/pages/lch-lab-colour-gradient-picker
+// http://davidjohnstone.net/pages/lch-lab-colour-gradient-picker
 labC = [
 "#f2c407",
 "#e9bf3b",
@@ -24,76 +52,69 @@ labC = [
 "#a9a9a9"
 ];
 
-function initVis0() {
-	dnutVis("#eConn", data.nigeriaF.eConnData, data.nigeriaF.eConnName, [0,3]);
-}
-
-function initVis1() {
-	dnutVis("#lightEdu", data.nigeriaF.hhFEeduMOLightData, data.nigeriaF.hhFEeduMOLightName, [0,1,3,2]);
-}
-
-function initVis2() {
-	dnutVis("#cookEduMo", data.nigeriaF.hhMAeduCookData, data.nigeriaF.hhMAeduCookName, [2,0]);
-}
-
-function initVis3() {
-	dnutVis("#lightDistRoad", data.nigeriaF.hhBoDistRoadData, data.nigeriaF.hhBoDistRoadName, [0,3,5,3,3,6]);
-}
-
-
-function initVis4() {
-	dnutVis("#cookDistPop", data.nigeriaF.hhBoDistPopData, data.nigeriaF.hhBoDistPopName, [4,4,3,3,2,0]);
-}
-
-function ttip(e) {
-	if (e.type == 'mouseenter') {
-		$('#perl-tooltip').html(e.data);
-		$('#perl-tooltip').css('left', event.pageX - 10)
-			.css('top', event.pageY - 45)
-			.css('opacity', '1');		
-	} else {
-		$('#perl-tooltip')
-			.css('opacity', '0');		
-	}
-}
-
 // Sources
 
 var data = [];
+var staticData = {};  // text n stuff
 
-$(document).ready(function(){
-	initData();
-	initHtml();
+function initVis() {
 	calcSizes();
 	
-	initVis0();
-	initVis1();
-	initVis2();
-	initVis3();
-	initVis4();
-	
+	staticData.dnutData.forEach((d) => {
+		dnutVis(d[0], d[1], d[2], d[3]);
+		});
 	initDiseaseData();
+}
+
+$(document).ready(function(){
+	
+	initData();
+	initHtml();
+	
+	// set-up icons
+	[["country","gender"],
+	["popc","lighting"],
+	["road","cooking"],
+	["road","cooking"],
+	["road","lighting"],
+	["road","lighting"]].forEach((d,i) => {
+		function mkTemplate (d) {
+			var titles = {
+				'popc':"Distance from Nearest Population Center (>20k ppl.)",
+				'road':"Distance from Nearest Road",
+				'cooking':"Electric Cooking",
+				'lighting':"Electric Lighting",
+				'country':"Country Wide",
+				'gender':"Access by Gender"
+				};
+				
+			template = '<img class="dnut-icons" src="img/{0}.svg" title="{1}">';
+			return template.format(d,titles[d]);
+		}
+		
+		html = mkTemplate(d[0]);
+		html += mkTemplate(d[1]);
+		$(".dnut").eq(i).prepend(html+"<br>");
+		});
+		
+	initVis();
 	
 	initFullPage();
 	
+	$(window).resize(initVis);
+	
+	// hack to resize graph and dnut correctly
+	$('.nav-tabs').on('click', () => {setTimeout(initVis, 200)});
+	
 	// my fullpage hack to add tooltips
-	slideNames = ['Gender/Electricity','Parental Education','Kerosene/Education','Road Access/Electricity','Pop. Centers/Kerosene'];
-	slideNames.forEach((d,i) => {
-		$('.fp-bottom a:eq(' + i + ')').on('mouseenter mouseleave', null, d, ttip);
-		});
+	//~ slideNames = ['Gender/Electricity','Parental Education','Kerosene/Education','Road Access/Electricity','Pop. Centers/Kerosene'];
+	//~ slideNames.forEach((d,i) => {
+		//~ $('.fp-bottom a:eq(' + i + ')').on('mouseenter mouseleave', null, d, ttip);
+		//~ });
 		
 	// window.addEventListener('resize', scaleSVG);
 });
 
-$(window).resize(function() {
-	calcSizes();
-  initVis0();
-  initVis1();
-  initVis2();
-  initVis3();
-  initVis4();
-  initDiseaseData()
-});
 
 
 // TOOLTIPS					WENT FOR INLINE VALS INSTEAD

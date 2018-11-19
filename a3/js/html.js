@@ -1,67 +1,28 @@
-// fullPage code and HTML element init
+// HTML element init
 
-var template0 = `
-<nav class="navbar navbar-inverse" style='display: none;'>
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="#"><b>{0}</b></a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <!--
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul> 
-      -->
-      <ul class="nav navbar-nav navbar-right">
-        {4}
-        <!-- <li><a href="#">By Gender - By Education - By Rurality</a></li> -->
-      </ul>
-    </div>
-  </div>
-</nav>
-  
-<div class="container-fluid text-center">    
-  <div class="row content">
-<!--
-    <div class="col-sm-2 sidenav">
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-    </div>
--->
-    <div class="col-sm-6 text-left">
-      <div class="navbar navbar-inverse">{0}</div>
-	    <svg id='{1}'></svg>
-	    
-    </div>
-    <div class="col-sm-6 sidenav">
+// ring elements
+template0 = `
+	<div class="tab-pane fade in {3}" id="p{0}">
+    <div class="col-sm-6"><svg class="vis" id="{1}"></svg></div>
+    <div class="col-sm-4 text-left">{2}</div>
+	</div>
+`;
 
-      <div class="col-sm-11 sidenav well-container">
-      <div class="well">
-        <p>{2}</p>
-        <hr>
-      <!--  </div>
-      <div class="well"> 1-->
-        <p>{3}</p>
-      </div>
-			</div>	
-      <div class="col-sm-1 sidenav">
-			</div>	
-    </div>
-    
-  </div>
-</div>
-`
+// graph element
+template1 = `
+	<div class="tab-pane fade in">
+    <div class="col-sm-8"><svg class="vis" id="{0}"></svg></div>
+    <div class="col-sm-4 text-left">{1}</div>
+	</div>
+`;
 
-template1 = `<li><a class="menuOpts" data-sect={1} data-slide={2}>{0}</a></li>`;  // menu option
+// pearl
+var template2 = `
+	<li class="nav-item {2}">
+		<a class="nav-link dnut" href="#p{1}" data-toggle="tab">{0}</a>
+	<li>  
+`;
+// <img src="test.png" style="width: 50%;">
 
 // a pythonesque format method
 if (!String.prototype.format) {
@@ -77,89 +38,40 @@ if (!String.prototype.format) {
     };
 }
 
-function mkMenu(names, sect) {
-	var html = '';
-	
-	names.forEach((e, i) => {
-		html += template1.format(e, sect, i);
-		});
-	return (html);
-}
-
 var copy00 = 'This series derives from World Bank\'s <b>Living Standards Measurement Study</b> (LSMS).  The data here is from the 2015-2016 third wave panel of the LSMS and covers location, education, and consuming habits of the respondents';
 
 function initHtml () {
 	var d = data.nigeriaF;
 	
-	// var m = mkMenu(['By Gender', 'By Education', 'By Rurality'], 2);
-	var m = mkMenu([], 2);
+	staticData.dnutData.forEach((d,i) => {
+		$("#access-content").append(template0.format(i, d[0], d[4], !i?"active":""));
+	});
 	
-	$('#vis0').html(template0.format("Choosing Grid Electricity &mdash; Gender", "eConn", copy00, data.nigeriaF.eConnCopy, m));
-	$('#vis1').html(template0.format("P6 Parental Education &mdash; Lighting Fuel", "lightEdu", copy00, data.nigeriaF.hhFEeduMOLightCopy, m));
-	$('#vis2').html(template0.format("P6 Mother's Education &mdash; Men's Cooking Fuel", "cookEduMo", copy00, data.nigeriaF.hhMAeduCookCopy, m));
-	$('#vis3').html(template0.format("Road Access &mdash; Lighting Fuel", "lightDistRoad", copy00, data.nigeriaF.hhBoDistRoadCopy, m));
-	$('#vis4').html(template0.format("Urban Access &mdash; Kerosene Usage", "cookDistPop", copy00, data.nigeriaF.hhBoDistPopCopy, m));
-
-	$('#vis5').html(template0.format("Burden of Disease", "disease0", data.gbd.mainCopy, data.gbd.asthmaCopy, []));
-
-	// set up handlers
-	$('.menuOpts').on('click', (e) => {
-		var sect = $(e.target).attr('data-sect');
-		var slide = $(e.target).attr('data-slide');
-		$.fn.fullpage.moveTo(sect,slide);
-		
-		$('.menuOpts').removeAttr('data-active');
-		$(`.menuOpts[data-sect=${sect}][data-slide=${slide}]`).attr('data-active', '1');
+	//~ $("#access-content").append(template0.format(0, "eConn", staticData.eConnCopy, "active"));
+	//~ $("#access-content").append(template0.format(1, "lightEdu", staticData.hhFEeduMOLightCopy, ""));
+	//~ $("#access-content").append(template0.format(2, "cookEduMo", staticData.hhMAeduCookCopy, ""));
+	//~ $("#access-content").append(template0.format(3, "lightDistRoad", staticData.hhBoDistRoadCopy, ""));
+	//~ $("#access-content").append(template0.format(4, "cookDistPop", staticData.hhBoDistPopCopy, ""));
+	
+	staticData['dnutPearlNames'].forEach((d,i) => {
+		$("#dnut-pills").append(template2.format(d, i, !i?"active":""));
 		});
+	//~ $('#vis0').html(template0.format("Choosing Grid Electricity &mdash; Gender", "eConn", copy00, data.nigeriaF.eConnCopy, m));
+	//~ $('#vis1').html(template0.format("P6 Parental Education &mdash; Lighting Fuel", "lightEdu", copy00, data.nigeriaF.hhFEeduMOLightCopy, m));
+	//~ $('#vis2').html(template0.format("P6 Mother's Education &mdash; Men's Cooking Fuel", "cookEduMo", copy00, data.nigeriaF.hhMAeduCookCopy, m));
+	//~ $('#vis3').html(template0.format("Road Access &mdash; Lighting Fuel", "lightDistRoad", copy00, data.nigeriaF.hhBoDistRoadCopy, m));
+	//~ $('#vis4').html(template0.format("Urban Access &mdash; Kerosene Usage", "cookDistPop", copy00, data.nigeriaF.hhBoDistPopCopy, m));
+
+	$('#disease').html(template1.format("disease0", staticData.gbd.asthmaCopy));
+
+	//~ // set up handlers
+	//~ $('.menuOpts').on('click', (e) => {
+		//~ var sect = $(e.target).attr('data-sect');
+		//~ var slide = $(e.target).attr('data-slide');
+		//~ $.fn.fullpage.moveTo(sect,slide);
+		
+		//~ $('.menuOpts').removeAttr('data-active');
+		//~ $(`.menuOpts[data-sect=${sect}][data-slide=${slide}]`).attr('data-active', '1');
+		//~ });
 	
-}
-
-//~ function aaddSlidesNavigation(section, numSlides){
-        //~ section.append('<div class="fp-slidesNav"><ul></ul></div>');
-        //~ var nav = section.find('.fp-slidesNav');
-
-        //~ //top or bottom
-        //~ //nav.addClass(options.slidesNavPosition);
-
-        //~ for(var i=0; i< numSlides; i++){
-            //~ //nav.find('ul').append('<li><a href="#" title="'+ tooltip[i] +'"><span></span></a></li>');
-
-            //~ // Only add tooltip if needed (defined by user)
-            //~ var tooltip = ['1','2','3','4','5'][i]; //options.horizontalNavigationToolTip[i];
-
-            //~ // var li = '<li><a class="tooltips" href="#"><span></span><div><img src="images/tooltip/'+ tooltip +'.png" /></span></div></a>';
-            //~ var li = '<li><a class="tooltips" href="#"><span></span><div>'+ tooltip +'"</span></div></a>';
-            //~ li += '</li>';
-
-            //~ nav.find('ul').append(li);
-        //~ }
-
-        //~ //centering it
-        //~ nav.css('margin-left', '-' + (nav.width()/2) + 'px');
-
-        //~ nav.find('li').first().find('a').addClass('active');
-    //~ }
-
-function initFullPage() {
-	//initialising fullpage.js in the jQuery way
-	$('#fullpage').fullpage({
-			sectionsColor: '#333333', // ['#ff5f45', '#0798ec', '#fc6c7c', '#fec401'],
-			navigation: true,
-			slidesNavigation: true,
-			licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
-			controlArrows: false,
-			navigationTooltips: ['Title', 'Question', 'Context','Choices','Burden','Final','Sources'],
-			horizontalNavigationToolTip: ['tooltip1','tooltip2','Fuel','Disease','e','Sources'],
-	});
-
-	// calling fullpage.js methods using jQuery
-	$('#moveSectionUp').click(function(e){
-			e.preventDefault();
-			$.fn.fullpage.moveSectionUp();
-	});
-
-	$('#moveSectionDown').click(function(e){
-			e.preventDefault();
-			$.fn.fullpage.moveSectionDown();
-	});
 }

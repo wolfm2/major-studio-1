@@ -101,6 +101,26 @@ function insVDR(name, insData) {
 	vDataRepo[name] = insData;
 }
 
+// get a couple tables. return % sum of electric rows within col. 
+function getColPcnt (tabs, col, light) {
+	var electricSrcs = light?[4,5,7]:[5,6]; // [[grid, generator], battery]
+  // c0 = vDataRepo['hhm-DistMark-Light'].map((d) => {return d[col]})
+  var col0 = tabs[0].map((d) => {return d[col]});
+  var col1 = tabs[1].map((d) => {return d[col]});
+	var tot0 = _.sum(col0);
+	var tot1 = _.sum(col1);
+	var sum0 = 0, sum1 = 0; // sum pcnt of electric srces
+	col0.forEach((d,i) => {
+		if (electricSrcs.includes(i))
+		  sum0 += d;
+		});
+	col1.forEach((d,i) => {
+		if (electricSrcs.includes(i))
+		  sum1 += d;
+		});
+	return ([sum0/tot0, sum1/tot1])
+}
+
 // use each time you need new filtered data
 // then turn off
 function initData() {
@@ -114,7 +134,60 @@ function initData() {
 			.await(processData);
 	} else {
 			data.nigeriaF = 
-{"HeadW":917,"HeadM":3694,"eConnData":[0.6194111232279171,0.5043313481321061],"eConnName":["Women hh","Men hh"],"eConnCopy":"Of the total head of household respondents, <b>917</b> were female and <b>3694</b> were male. <b class=\"highlight0\">61% of female reported having a grid electrical connection</b> versus only <b class=\"highlight1\">50% of men</b>.","hhFEeduMOLightData":[0.5700000000000001,0.28,0.13,0.17],"hhFEeduMOLightName":["Mothers/Women hh","Fathers/Women hh","Mothers/Men hh","Fathers/Men hh"],"hhFEeduMOLightCopy":"Parents education can also effect children's decisions.  Most promisingly, <b><span class='highlight0'>female heads</span> of household with p6 educated mothers are at least <span class='highlight0'>29% more likely to choose grid electricity</span></b> than all other combinations.  <span class='highlight3'>A similar but deminished effect can be seen for males with educated fathers.</span>","hhMAeduCookData":[0.11,0.07],"hhMAeduCookName":["No education","P6 educated"],"hhMAeduCookCopy":"When choosing cooking fuels, <span class='highlight1'>male</span> head of households show a <b><span class='highlight1'>5% reduced preference</span> for kerosene when their mothers have finished a P6 level</b> versus mothers with no education.","hhBoDistRoadData":[0.23,0.15,0.09,0.16,0.17,0.04],"hhBoDistRoadName":["10km/Women hh","20km/Women hh","30km/Women hh ","10km/Men hh","20km/Men hh","30Km/Men hh "],"hhBoDistRoadCopy":"At <b><span class='highlight0 highlight2'>0-10km and 20-30km</span> from the nearest road, <span class='highlight0 highlight2'>women show a 7% and 5% greater preference</span> respectively for electric lighting</b> versus men. That said, between <span class='highlight1 highlight4'>10-20km the genders are in rough parity</span>.","hhBoDistPopData":[0.07,0.06,0.13,0.13,0.11,0.03],"hhBoDistPopName":["Wood/Men hh","Wood/Women hh","Coal/Men hh","Coal/Women hh","Kerosene/Men hh","Kerosene/Women hh"],"hhBoDistPopCopy":"When greater than <b>25km from a population center </b><span class='highlight0 highlight1 highlight2 highlight3'>coal and purchased wood usage remain in parity</span> between genders, <b class='highlight5'>kerosene however, is 8% less frequently chosen by women</b> than men."}
+{"HeadW":917,"HeadM":3694,"eConnData":[0.6194111232279171,0.5043313481321061],"hhFEeduMOLightData":[0.5700000000000001,0.28,0.13,0.17],"hhMAeduCookData":[0.11,0.07],"hhBo30kPopData":[0.09,0.21],"hhBo45kPopData":[0.03,0.06],"hhBo10kRoadData":[0.23,0.16],"hhBo30kRoadData":[0.09,0.04],"hhBoDistPopData":[0.07,0.06,0.13,0.13,0.11,0.03],"distPopCook1":[0.13636363636363635,0.3333333333333333],"distRoadCook0":[0.2857142857142857,0.3333333333333333],"distRoadCook1":[0.40909090909090906,0.21874999999999997],"distRoadLight0":[0.7674418604651162,0.6551724137931034],"distRoadLight1":[0.9545454545454546,0.7187500000000001]};
+
+			//~ staticData.hhFEeduMOLightName = ['Mothers/Women hh', 'Fathers/Women hh', 'Mothers/Men hh', 'Fathers/Men hh'];
+			//~ staticData.hhFEeduMOLightCopy = "Parents education can also effect children's decisions.  Most promisingly, <b><span class='highlight0'>female heads</span> of household with p6 educated mothers are at least <span class='highlight0'>29% more likely to choose grid electricity</span></b> than all other combinations.  <span class='highlight3'>A similar but deminished effect can be seen for males with educated fathers.</span>";
+			//~ staticData.hhMAeduCookName = ['No education', 'P6 educated'];
+			//~ staticData.hhMAeduCookCopy = "When choosing cooking fuels, <span class='highlight1'>male</span> head of households show a <b><span class='highlight1'>5% reduced preference</span> for kerosene when their mothers have finished a P6 level</b> versus mothers with no education.";
+			//~ staticData.hhBo10kRoadName = ['Women', 'Men'];
+			//~ staticData.hhBo10kRoadCopy = "<h2>What is the state of electricity access by gender 10km from the nearest road?</h2><br>At <b><span class='highlight0 highlight2'>0-10km</span> from the nearest road, <span class='highlight0 highlight2'>women show 7% greater access</span>  to electric lighting</b> versus men.";
+			
+			//~ staticData.hhBo30kRoadName = ['Women', 'Men'];
+			//~ staticData.hhBo30kRoadCopy = "<h2>What is the state of electricity access by gender 30km from the nearest road?</h2><br>At <b><span class='highlight0 highlight2'>20-30km</span> from the nearest road, <span class='highlight0 highlight2'>women show 5% greater access</span>  to electric lighting</b> versus men.";
+			
+			//~ staticData.hhBoDistRoadName = ['10km/Women hh', '20km/Women hh', '30km/Women hh ', '10km/Men hh', '20km/Men hh', '30Km/Men hh '];
+			//~ staticData.hhBoDistRoadCopy = "<h2>What does access to electricity look like 10km from the nearest road?</h2><br>At <b><span class='highlight0 highlight2'>0-10km and 20-30km</span> from the nearest road, <span class='highlight0 highlight2'>women show a 7% and 5% greater preference</span> respectively for electric lighting</b> versus men. That said, between <span class='highlight1 highlight4'>10-20km the genders are in rough parity</span>.";
+			
+			//~ staticData.hhBoDistPopName = [
+															//~ 'Wood/Men hh', 
+															//~ 'Wood/Women hh',
+														  //~ 'Coal/Men hh', 
+															//~ 'Coal/Women hh', 
+															//~ 'Kerosene/Men hh', 
+															//~ 'Kerosene/Women hh'];
+			//~ staticData.hhBoDistPopCopy = "<h2>What does kerosene usage look like 25km outside of a population center?</h2><br>When greater than <b>25km from a population center </b><span class='highlight0 highlight1 highlight2 highlight3'>coal and purchased wood usage remain in parity</span> between genders, <b class='highlight5'>kerosene however, is 8% less frequently chosen by women</b> than men."
+
+			//~ staticData.hhBo30kPopName = ['Women', 'Men'];
+			//~ staticData.hhBo30kPopCopy = "<h2>What is the state of electricity access by gender 30km from a population center?</h2><br>At <b><span class='highlight0 highlight2'>20-30km</span> from the nearest road, <span class='highlight0 highlight2'>women show 5% greater access</span>  to electric lighting</b> versus men.";
+
+			//~ staticData.hhBo45kPopName = ['Women', 'Men'];
+			//~ staticData.hhBo45kPopCopy = "<h2>What is the state of electricity access by gender 45km from a population center?</h2><br>At <b><span class='highlight0 highlight2'>20-30km</span> from the nearest road, <span class='highlight0 highlight2'>women show 5% greater access</span>  to electric lighting</b> versus men.";
+			
+			staticData.eConnCopy = "<h2>Across the country what does electricity access look like?</h2><br>Of the total head of household respondents to the World Bank\'s 2016 <b>Living Standards Measurement Study</b> (LSMS), <b>917 were female</b> and <b>3694 were male</b>. Of the respondents <b class='highlight0'>61% of the women</b> versus <b class='highlight1'>50% of men</b>  <b class='highlight0 highlight1'>reported having a grid electrical connection</b>. <br><span class='highlight0 highlight1 summation'>The residual</span><span class='highlight0 summation'> 39%</span> and <span class='highlight1 summation'> 50%</span> <span class='highlight0 highlight1 summation'>of women</span> in female and male headed households respectively <span class='highlight0 highlight1 summation'>remain at risk</span>.";
+			staticData.distPopCook1Copy = "<h2>Who uses electricity for cooking 15-30km from a population center?</h2><br>At this distance, <b><span class='highlight0'>13% of women</span> head of household respondents vs. <span class='highlight1'>33% of men</span> <span class='highlight0 highlight1'>use electric cooking units</span></b>.<br><span class='highlight0 highlight1 summation'>The residual</span><span class='highlight0 summation'> 87%</span> and <span class='highlight1 summation'> 67%</span> <span class='highlight0 highlight1 summation'>of women</span> in female and male headed households respectively <span class='highlight0 highlight1 summation'>remain at risk</span>.";
+			staticData.distRoadCook0Copy = "<h2>Who uses electricity for cooking within 10km from the nearest road?</h2><br>At this distance, <b><span class='highlight0'>28% of women</span> head of household respondents vs. <span class='highlight1'>33% of men</span> <span class='highlight0 highlight1'>use electric cooking units</span></b>.<br><span class='highlight0 highlight1 summation'>The residual</span><span class='highlight0 summation'> 72%</span> and <span class='highlight1 summation'> 67%</span> <span class='highlight0 highlight1 summation'>of women</span> in female and male headed households respectively <span class='highlight0 highlight1 summation'>remain at risk</span>.";
+			staticData.distRoadCook1Copy = "<h2>Who uses electricity for cooking 10-20km from the nearest road?</h2><br>At this distance, <b><span class='highlight0'>40% of women</span> head of household respondents vs. <span class='highlight1'>21% of men</span> <span class='highlight0 highlight1'>use electric cooking units</span></b>.<br><span class='highlight0 highlight1 summation'>The residual</span><span class='highlight0 summation'> 60%</span> and <span class='highlight1 summation'> 79%</span> <span class='highlight0 highlight1 summation'>of women</span> in female and male headed households respectively <span class='highlight0 highlight1 summation'>remain at risk</span>.";
+			staticData.distRoadLight0Copy = "<h2>Who uses electricity for lighting within 10km from the nearest road?</h2><br>At this distance, <b><span class='highlight0'>76% of women</span> head of household respondents vs. <span class='highlight1'>65% of men</span> <span class='highlight0 highlight1'>use electric cooking units</span></b>.<br><span class='highlight0 highlight1 summation'>The residual</span><span class='highlight0 summation'> 24%</span> and <span class='highlight1 summation'> 35%</span> <span class='highlight0 highlight1 summation'>of women</span> in female and male headed households respectively <span class='highlight0 highlight1 summation'>remain at risk</span>.";
+			staticData.distRoadLight1Copy = "<h2>Who uses electricity for lighting 10-20km from a population center?</h2><br>At this distance, a near total complete uptake of <b><span class='highlight0'>95% of women</span> head of household respondents vs. 24% less, that is,<span class='highlight1'> 71% of men</span> <span class='highlight0 highlight1'>use electric lighting</span></b>.<br><span class='highlight0 highlight1 summation'>The residual</span><span class='highlight0 summation'> 5%</span> and <span class='highlight1 summation'> 29%</span> <span class='highlight0 highlight1 summation'>of women</span> in female and male headed households respectively <span class='highlight0 highlight1 summation'>remain at risk</span>.";
+
+			staticData.dnutData = [
+				["eConn", data.nigeriaF.eConnData, ["Women","Men"], [0,3], staticData.eConnCopy],
+				//~ ["#lightEdu", data.nigeriaF.hhFEeduMOLightData, staticData.hhFEeduMOLightName, [0,1,3,2]],
+				//~ ["#cookEduMo", data.nigeriaF.hhMAeduCookData, staticData.hhMAeduCookName, [2,0]],
+				//~ ["light10kRoad", data.nigeriaF.hhBo10kRoadData, staticData.hhBo10kRoadName, [0,3], staticData.hhBo10kRoadCopy],
+				//~ ["light30kRoad", data.nigeriaF.hhBo30kRoadData, staticData.hhBo30kRoadName, [0,3], staticData.hhBo30kRoadCopy],
+				//~ ["light30kPop", data.nigeriaF.hhBo30kPopData, staticData.hhBo30kPopName, [3,0], staticData.hhBo30kPopCopy],
+				//~ ["light45kPop", data.nigeriaF.hhBo45kPopData, staticData.hhBo45kPopName, [3,0], staticData.hhBo45kPopCopy],
+				//~ ["cookDistPop", data.nigeriaF.hhBoDistPopData, staticData.hhBoDistPopName, [4,4,3,3,2,0], staticData.hhBoDistPopCopy]
+				["distPopCook1", data.nigeriaF.distPopCook1, ["Women","Men"], [3,0], staticData.distPopCook1Copy],
+				["distRoadCook0", data.nigeriaF.distRoadCook0, ["Women","Men"], [3,0], staticData.distRoadCook0Copy],
+				["distRoadCook1", data.nigeriaF.distRoadCook1, ["Women","Men"], [0,3], staticData.distRoadCook1Copy],
+				["distRoadLight0", data.nigeriaF.distRoadLight0, ["Women","Men"], [0,3], staticData.distRoadLight0Copy],
+				["distRoadLight1", data.nigeriaF.distRoadLight1, ["Women","Men"], [0,3], staticData.distRoadLight1Copy]
+			];
+			
+			staticData['dnutPearlNames'] = ['Overall', "Infrastructure 0", "Infrastructure 1", "Infrastructure 2", "Infrastructure 3", "Infrastructure 4"];
 	}
 }
 
@@ -194,9 +267,6 @@ function processData(e, data0, data1, data2, data3) {
 	
 	// Connection to grid Percent
 	dnf.eConnData = [we/dnf.HeadW, me/dnf.HeadM];
-	dnf.eConnName = ['Women hh', 'Men hh'];
-	dnf.eConnCopy = 'Of the total head of household respondents, <b>917</b> were female and <b>3694</b> were male. <b class="highlight0">61% of female reported having a grid electrical connection</b> versus only <b class="highlight1">50% of men</b>.';
-
 	
 	// TAKEAWAY = public grid uptake tracks w gender
 	console.log("percent elect w vs m", dnf.eConnW, dnf.eConnM);
@@ -256,8 +326,6 @@ function processData(e, data0, data1, data2, data3) {
 		_.sum(vDataRepo['hhm-eduMo-Light'][5].slice(8)),
 		_.sum(vDataRepo['hhm-eduFa-Light'][5].slice(8))
 		];
-	dnf.hhFEeduMOLightName = ['Mothers/Women hh', 'Fathers/Women hh', 'Mothers/Men hh', 'Fathers/Men hh'];
-	dnf.hhFEeduMOLightCopy = "Parents education can also effect children's decisions.  Most promisingly, <b><span class='highlight0'>female heads</span> of household with p6 educated mothers are at least <span class='highlight0'>29% more likely to choose grid electricity</span></b> than all other combinations.  <span class='highlight3'>A similar but deminished effect can be seen for males with educated fathers.</span>";
 
 	// TAKEAWAY = Mothers edu tracks with grid uptake for lighting, no story w Dad Edu
 	//~ console.log(dnf.genEdu.thhFeduML, dnf.genEdu.hhFeduML, dnf.genEdu.thhMeduML, dnf.genEdu.hhMeduML, 
@@ -291,8 +359,6 @@ function processData(e, data0, data1, data2, data3) {
 		vDataRepo['hhm-eduMo-Cook'][5][0],
 		vDataRepo['hhm-eduMo-Cook'][5][8]
 		];
-	dnf.hhMAeduCookName = ['No education', 'P6 educated'];
-	dnf.hhMAeduCookCopy = "When choosing cooking fuels, <span class='highlight1'>male</span> head of households show a <b><span class='highlight1'>5% reduced preference</span> for kerosene when their mothers have finished a P6 level</b> versus mothers with no education.";
 
 	// Takeaway = Women hh are especially negatively affected by low dad edu when chosing cooking fuel
 	//~ console.log(dnf.genEdu.thhFeduMC, dnf.genEdu.hhFeduMC, dnf.genEdu.thhMeduMC, dnf.genEdu.hhMeduMC, 
@@ -332,6 +398,16 @@ function processData(e, data0, data1, data2, data3) {
 	tmpD = genFuelDistMap(lFuel, rangePopc, 'm', 'dPopc', 'srcLight', quantaPopc);
 	insVDR('hhm-DistPop-Light', tmpD);
 	
+	dnf.hhBo30kPopData = [
+	  vDataRepo['hhf-DistPop-Light'][5][1],
+	  vDataRepo['hhm-DistPop-Light'][5][1]
+	];
+	
+	dnf.hhBo45kPopData = [
+	  vDataRepo['hhf-DistPop-Light'][5][2],
+	  vDataRepo['hhm-DistPop-Light'][5][2]
+	];
+	
 	// NEAREST MARKET - Max: 214km
 	quantaMark = 25; // km
 	rangeMark = [...Array(10).keys()];
@@ -342,17 +418,25 @@ function processData(e, data0, data1, data2, data3) {
 	tmpD = genFuelDistMap(lFuel, rangeMark, 'm', 'dMark', 'srcLight', quantaMark);
 	insVDR('hhm-DistMark-Light', tmpD);
 	
-	dnf.hhBoDistRoadData = [
+	//~ dnf.hhBoDistRoadData = [
+		//~ vDataRepo['hhf-DistRoad-Light'][5][0],
+		//~ vDataRepo['hhf-DistRoad-Light'][5][1],
+		//~ vDataRepo['hhf-DistRoad-Light'][5][2],
+		//~ vDataRepo['hhm-DistRoad-Light'][5][0],
+		//~ vDataRepo['hhm-DistRoad-Light'][5][1],
+		//~ vDataRepo['hhm-DistRoad-Light'][5][2]
+		//~ ];
+		
+	dnf.hhBo10kRoadData = [
 		vDataRepo['hhf-DistRoad-Light'][5][0],
-		vDataRepo['hhf-DistRoad-Light'][5][1],
+		vDataRepo['hhm-DistRoad-Light'][5][0]
+		];	
+		
+	dnf.hhBo30kRoadData = [
 		vDataRepo['hhf-DistRoad-Light'][5][2],
-		vDataRepo['hhm-DistRoad-Light'][5][0],
-		vDataRepo['hhm-DistRoad-Light'][5][1],
 		vDataRepo['hhm-DistRoad-Light'][5][2]
 		];
-	dnf.hhBoDistRoadName = ['10km/Women hh', '20km/Women hh', '30km/Women hh ', '10km/Men hh', '20km/Men hh', '30Km/Men hh '];
-	dnf.hhBoDistRoadCopy = "At <b><span class='highlight0 highlight2'>0-10km and 20-30km</span> from the nearest road, <span class='highlight0 highlight2'>women show a 7% and 5% greater preference</span> respectively for electric lighting</b> versus men. That said, between <span class='highlight1 highlight4'>10-20km the genders are in rough parity</span>.";
-		
+				
 	// COOKING USAGE
 	// NEAREST ROAD - Max: 68km
 	tmpD = genFuelDistMap(lFuel, rangeRoad, 'f', 'dRoad', 'srcCook', quantaRoad);
@@ -375,6 +459,8 @@ function processData(e, data0, data1, data2, data3) {
 	tmpD = genFuelDistMap(lFuel, rangeMark, 'm', 'dMark', 'srcCook', quantaMark);	
 	insVDR('hhm-DistMark-Light', tmpD);
 	
+
+	
 	dnf.hhBoDistPopData = [
 		vDataRepo['hhm-DistPop-Cook'][1][1],
 		vDataRepo['hhf-DistPop-Cook'][1][1],
@@ -383,14 +469,13 @@ function processData(e, data0, data1, data2, data3) {
 		vDataRepo['hhm-DistPop-Cook'][5][1],
 		vDataRepo['hhf-DistPop-Cook'][5][1]
 		];
-	dnf.hhBoDistPopName = [
-													'Wood/Men hh', 
-													'Wood/Women hh',
-												  'Coal/Men hh', 
-													'Coal/Women hh', 
-													'Kerosene/Men hh', 
-													'Kerosene/Women hh'];
-	dnf.hhBoDistPopCopy = "When greater than <b>25km from a population center </b><span class='highlight0 highlight1 highlight2 highlight3'>coal and purchased wood usage remain in parity</span> between genders, <b class='highlight5'>kerosene however, is 8% less frequently chosen by women</b> than men."
+	
+	// rev 2 metrics
+	dnf.distPopCook1 = getColPcnt([vDataRepo['hhf-DistPop-Cook'], vDataRepo['hhm-DistPop-Cook']], 1, false);
+	dnf.distRoadCook0 = getColPcnt([vDataRepo['hhf-DistRoad-Cook'], vDataRepo['hhm-DistRoad-Cook']], 0, false);
+	dnf.distRoadCook1 = getColPcnt([vDataRepo['hhf-DistRoad-Cook'], vDataRepo['hhm-DistRoad-Cook']], 1, false);
+	dnf.distRoadLight0 = getColPcnt([vDataRepo['hhf-DistRoad-Light'], vDataRepo['hhm-DistRoad-Light']], 0, true);
+	dnf.distRoadLight1 = getColPcnt([vDataRepo['hhf-DistRoad-Light'], vDataRepo['hhm-DistRoad-Light']], 1, true);
 	
 	// write data structure to window
 	$('body').html('<xmp>' + JSON.stringify(dnf) + '</xmp>');

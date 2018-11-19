@@ -3,9 +3,11 @@ svg {
 	filter: drop-shadow( 0px 2px 2px rgba(0,0,0,.25) );
 }
 
+/*
 .click-circle{
 	cursor: pointer;
 }
+*/
 
 #center-label {
   font-size: 4vh;
@@ -22,38 +24,53 @@ svg {
 }
 
 /* BOOTSTRAP */ 
+/*
 .menuOpts{
 	cursor: pointer;
 }
+*/
 
+/*
 .menuOpts[data-active]{
 	opacity: 1;  /* TODO too much hassle - do it later if you have time*/
 }
+*/
 
+/*
 .slide {
   background: #f9f9f9;
 }
+*/
 
 /* Remove the navbar's default margin-bottom and rounded borders */ 
+/*
 .navbar {
 	margin-bottom: 0;
 	border-radius: 0;
 }
+*/
 
 /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+/*
 .row.content {height: 450px}
+*/
 
 /* Set gray background color and 100% height */
+/*
 .sidenav {
 	/* padding-top: 20px; */
 	height: 100%;
 }
+*/
 
+/*
 .well-container {
     display: table;
     text-align: center;
 }
+*/
 
+/*
 .well {
   font-size: 1.72vh;
 	background-color: transparent;
@@ -65,6 +82,7 @@ svg {
 	
 	transition: all 0.5s;
 }
+*/
 
 #mytooltip {
   font-size: 1.5em;
@@ -74,6 +92,7 @@ svg {
   padding: .3em;
 }
 
+/*
 #perl-tooltip {
   font-size: 1em;
   color: #111;
@@ -81,6 +100,7 @@ svg {
   border-radius: 4px;
   padding: .3em;
 }
+*/
 
 /* Set black background color, white text and some padding
 footer {
@@ -90,6 +110,7 @@ footer {
 } */
 
 /* On small screens, set height to 'auto' for sidenav and grid */
+/*
 @media screen and (max-width: 767px) {
 	.sidenav {
 		height: auto;
@@ -97,6 +118,7 @@ footer {
 	}
 	.row.content {height:auto;} 
 }
+*/
 
 /* INTRO VIDEO */
 #title-back {
@@ -107,18 +129,42 @@ footer {
 	opacity: .85;
 }
 
+/* Rehetorical Question */
+.color-text b {
+	color: #f2c407;
+}
+
+/* main vis cols */
+div .col-sm-4, .row .col-sm-2 {
+  padding-top: 6vh;
+  font-size: 2.7vh;
+}
+
+.dnut-icons {
+    filter: opacity(.4);
+    margin: 3px;
+    width: 1.5vw;
+}
+
 #title-back > h1 {
     font-size: 6rem;
 }
 
 h2 {
-  font-size: 6vh !important;
+  font-size: 6vh;
 }
 
 .highlight {
 	color: black;
 	font-weight: bold;
-	transition: all 0.5s;
+	transition: all 0.7s;
+}
+
+.highlight.summation {
+	color:  #f2c407;
+	font-size: 1.1em;
+	font-weight: bold;
+	transition: all 0.7s;
 }
 
 #myVideo{
@@ -158,7 +204,7 @@ h2 {
 }
 
 .fp-tableCell > p {
-	font-size: 1.6vw !important;
+	font-size: 1.6vw;
 }
 
 .fp-tooltip {
@@ -206,8 +252,8 @@ video::-webkit-media-controls {
   fill: #555555;
 }
 
-#sources {
-	font-size: .9rem;
+#sources .fp-tableCell p {
+	font-size: 2vh;
 	text-align: left;
 }
 
@@ -232,16 +278,20 @@ video::-webkit-media-controls {
 		fill: url(#mainGradient);
 }
 
+/*
 .navbar-inverse {
 		font-size: 2rem;
     background-color: transparent; 
     border-color: transparent; 
 }
+*/
 
+/*
 .navbar-brand {
 		font-size: 3rem;
 		color: #777777 !important;
 }
+*/
 
 /* Disease graph */
 .line {
@@ -258,4 +308,23 @@ video::-webkit-media-controls {
 .dot {
     fill: #888888;
     stroke: #fff;
+}
+
+
+/* scrollbar */
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: #999999;
 }

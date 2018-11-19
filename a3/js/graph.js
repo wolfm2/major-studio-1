@@ -5,9 +5,9 @@ var height;
 var xScale;
 var yScale;
 
-data.gbd = {
+staticData.gbd = {
 	mainCopy: "This series is comprised of data from the Institute for Health Metrics and Evaluation (IHME). Specifically, their 2017 Global Burden of Disease dataset for all resperatory illness rates herein.",
-	asthmaCopy: 'The World Health Organization (WHO) and PubMed has outlined several causes of death including <b><span class="highlight0 highlight1">asthma</span>, <span class="highlight2 highlight3">congestive obstructive pulminary disease</span> and <span class="highlight4 highlight5">stroke</span></b> that are attributable to solid fuel and kerosene usage <sup>[1][2]</sup>.  This graph explores how <b>these diseases <span class="highlight0 highlight1 highlight2 highlight3 highlight4 highlight5">disproportionally affect Nigerian women</span></b> since 2007.'
+	asthmaCopy: '<h2>What diseases correlated with dirty fuel usage by gender?</h2><br><b>The World Health Organization (WHO) and PubMed</b> have outlined several causes of death including <b><span class="highlight0 highlight1">asthma</span>, <span class="highlight2 highlight3">congestive obstructive pulminary disease</span> and <span class="highlight4 highlight5">stroke</span></b> that are <b>attributable to dirty fuel usage</b> <sup>[1][2]</sup>.  This graph explores how <b>each disease <span class="highlight0 highlight1 highlight2 highlight3 highlight4 highlight5">disproportionally affects Nigerian women</span></b> since 2007.'
 }
 
 function initDiseaseData() {
