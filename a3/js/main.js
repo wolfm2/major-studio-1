@@ -73,7 +73,7 @@ $(document).ready(function(){
 	
 	// set-up icons
 	[["country","gender"],
-	["popc","lighting"],
+	["popc","cooking"],
 	["road","cooking"],
 	["road","cooking"],
 	["road","lighting"],
