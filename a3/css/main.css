@@ -154,6 +154,11 @@ h2 {
   font-size: 6vh;
 }
 
+.slide h2 {
+  font-size: 6vh;
+  text-align: center;
+}
+
 .highlight {
 	color: black;
 	font-weight: bold;
@@ -233,6 +238,12 @@ video::-webkit-media-controls {
 }
 
 #section1, #sources {
+	padding: 0% 20% 0% 20% !important;
+	font-size: 1rem;
+	text-align: justify;
+}
+
+#section2 {
 	padding: 0% 20% 0% 20% !important;
 	font-size: 1rem;
 	text-align: justify;
