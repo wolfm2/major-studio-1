@@ -3,7 +3,7 @@
 // ring elements
 template0 = `
 	<div class="tab-pane fade in {3}" id="p{0}">
-    <div class="col-sm-6"><svg class="vis" id="{1}"></svg></div>
+    <div class="col-sm-6"><svg class="vis vis-dnut" id="{1}"></svg></div>
     <div class="col-sm-4 text-left">{2}</div>
 	</div>
 `;

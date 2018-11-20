@@ -12,7 +12,7 @@ function initFullPage() {
 			slidesNavigation: true,
 			licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
 			controlArrows: false,
-			navigationTooltips: ['Title', 'Question', 'Context','Choices','Burden','Final','Sources'],
+			navigationTooltips: ['Title', 'Question', 'Data', 'Final','Sources'],
 	});
 
 	// calling fullpage.js methods using jQuery
