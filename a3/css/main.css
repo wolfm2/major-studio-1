@@ -331,7 +331,7 @@ video::-webkit-media-controls {
 
 ::-webkit-scrollbar
 {
-	width: 6px;
+	width: 8px;
 	background-color: #F5F5F5;
 }
 
