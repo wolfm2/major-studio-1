@@ -92,15 +92,11 @@ svg {
   padding: .3em;
 }
 
-/*
-#perl-tooltip {
-  font-size: 1em;
-  color: #111;
-  background-color: transparent;
-  border-radius: 4px;
-  padding: .3em;
+#bulb img{
+    position: absolute;
+    width: 25%;
+    left: -13%;
 }
-*/
 
 /* Set black background color, white text and some padding
 footer {
