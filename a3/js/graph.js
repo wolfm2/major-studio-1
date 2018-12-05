@@ -65,7 +65,8 @@ function bdAxes(svg) {
 			.attr("transform", "translate(67,-10)")
 }
 
-gColors = ['#6B818C', '#E09891', '#CB769E', '#94A08D'];
+// gColors = ['#6B818C', '#E09891', '#CB769E', '#94A08D'];
+gColors = ['#FEDC6F', '#E09891', '#32C8EC', '#94A08D'];
 
 function diseaseGraph(data) {
 	

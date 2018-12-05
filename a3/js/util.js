@@ -147,38 +147,39 @@ function dnutVis(id, vData, vName, vColor) {
     .text((d) => {return d;})
     .exit();
   
-  // Create the svg:defs element and the main gradient definition.
-	var svgDefs = s.append('defs');
+  // Daniel: get rid of gradient
+  //~ // Create the svg:defs element and the main gradient definition.
+	//~ var svgDefs = s.append('defs');
 
-	var mainGradient = svgDefs.append('linearGradient') // diagonal
-		.attr('id', 'mainGradient')
-		.attr("x1", "40%")
-		.attr("x2", "100%")
-		.attr("y1", "40%")
-		.attr("y2", "100%");
+	//~ var mainGradient = svgDefs.append('linearGradient') // diagonal
+		//~ .attr('id', 'mainGradient')
+		//~ .attr("x1", "40%")
+		//~ .attr("x2", "100%")
+		//~ .attr("y1", "40%")
+		//~ .attr("y2", "100%");
 
-	// Create the stops of the main gradient. Each stop will be assigned
-	// a class to style the stop using CSS.
-	mainGradient.append('stop')
-			.attr('class', 'stop-left')
-			.attr('offset', '0%');
+	//~ // Create the stops of the main gradient. Each stop will be assigned
+	//~ // a class to style the stop using CSS.
+	//~ mainGradient.append('stop')
+			//~ .attr('class', 'stop-left')
+			//~ .attr('offset', '0%');
 
-	mainGradient.append('stop')
-			.attr('class', 'stop-right')
-			.attr('offset', '100%');
+	//~ mainGradient.append('stop')
+			//~ .attr('class', 'stop-right')
+			//~ .attr('offset', '100%');
 
   
   
-  // box behind legend
-  var bbox = d3.select(id).select(".dLegend").node().getBBox();
-	var padding = 2;
-	var rect = d3.select(id).select('.dLegend').insert('rect', 'text' ).attr("x", bbox.x - padding)
-    .attr("y", bbox.y - padding)
-    .attr("width", bbox.width + (padding*2))
-    .attr("height", bbox.height + (padding*2))
-    .style("opacity", ".5")
-    .classed('filled', true)
-    // .style("fill", '#cfcfcf');
+  //~ // box behind legend
+  //~ var bbox = d3.select(id).select(".dLegend").node().getBBox();
+	//~ var padding = 2;
+	//~ var rect = d3.select(id).select('.dLegend').insert('rect', 'text' ).attr("x", bbox.x - padding)
+    //~ .attr("y", bbox.y - padding)
+    //~ .attr("width", bbox.width + (padding*2))
+    //~ .attr("height", bbox.height + (padding*2))
+    //~ .style("opacity", ".5")
+    //~ .classed('filled', true)
+    //~ // .style("fill", '#cfcfcf');
   
 }
 
