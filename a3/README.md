@@ -1,4 +1,4 @@
-![Site Preview](preview.png)
+[<img src="preview.png">](https://wolfm2.github.io/major-studio-1/a3/)
 
 ## Nigerian Women's Health and Access to Electricity
 
