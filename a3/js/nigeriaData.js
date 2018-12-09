@@ -164,6 +164,8 @@ function initData() {
 			//~ staticData.hhBo45kPopName = ['Women', 'Men'];
 			//~ staticData.hhBo45kPopCopy = "<h2>What is the state of electricity access by gender 45km from a population center?</h2><br>At <b><span class='highlight0 highlight2'>20-30km</span> from the nearest road, <span class='highlight0 highlight2'>women show 5% greater access</span>  to electric lighting</b> versus men.";
 			
+			staticData.mapCopy = "<h2>Across the country what does electricity access look like?</h2><br>According to the Nigerian Demographic and Health Survey (2013) the <b>percentage of electrified homes varies widely by state</b>. By gender, the World Bank\'s LSMS (2016) reports an average of <b>61% of the female headed households</b> and <b>50% of male headed households</b> being electrified.";
+			
 			staticData.eConnCopy = "<h2>Across the country what does electricity access look like?</h2><br>Of the total head of household respondents to the World Bank\'s 2016 <b>Living Standards Measurement Study</b> (LSMS), <b>917 were female</b> and <b>3694 were male</b>. Of the respondents <b class='highlight0'>61% of the women</b> versus <b class='highlight1'>50% of men</b>  <b class='highlight0 highlight1'>reported having a grid electrical connection</b>. <br><span class='highlight0 highlight1 summation'>The residual</span><span class='highlight0 summation'> 39%</span> and <span class='highlight1 summation'> 50%</span> <span class='highlight0 highlight1 summation'>of women</span> in female and male headed households respectively <span class='highlight0 highlight1 summation'>remain at risk</span>.";
 			staticData.distPopCook1Copy = "<h2>Who uses electricity for cooking 15-30km from a population center?</h2><br>At this distance, <b><span class='highlight0'>13% of women</span> head of household respondents vs. <span class='highlight1'>33% of men</span> <span class='highlight0 highlight1'>use electric cooking units</span></b>.<br><span class='highlight0 highlight1 summation'>The residual</span><span class='highlight0 summation'> 87%</span> and <span class='highlight1 summation'> 67%</span> <span class='highlight0 highlight1 summation'>of women</span> in female and male headed households respectively <span class='highlight0 highlight1 summation'>remain at risk</span>.";
 			staticData.distRoadCook0Copy = "<h2>Who uses electricity for cooking within 10km from the nearest road?</h2><br>At this distance, <b><span class='highlight0'>28% of women</span> head of household respondents vs. <span class='highlight1'>33% of men</span> <span class='highlight0 highlight1'>use electric cooking units</span></b>.<br><span class='highlight0 highlight1 summation'>The residual</span><span class='highlight0 summation'> 72%</span> and <span class='highlight1 summation'> 67%</span> <span class='highlight0 highlight1 summation'>of women</span> in female and male headed households respectively <span class='highlight0 highlight1 summation'>remain at risk</span>.";
@@ -172,7 +174,7 @@ function initData() {
 			staticData.distRoadLight1Copy = "<h2>Who uses electricity for lighting 10-20km from a the nearest road?</h2><br>At this distance, a near total complete uptake of <b><span class='highlight0'>95% of women</span> head of household respondents vs. 24% less, that is,<span class='highlight1'> 71% of men</span> <span class='highlight0 highlight1'>use electric lighting</span></b>.<br><span class='highlight0 highlight1 summation'>The residual</span><span class='highlight0 summation'> 5%</span> and <span class='highlight1 summation'> 29%</span> <span class='highlight0 highlight1 summation'>of women</span> in female and male headed households respectively <span class='highlight0 highlight1 summation'>remain at risk</span>.";
 
 			staticData.dnutData = [
-				["eConn", data.nigeriaF.eConnData, ["Women","Men"], [0,3], staticData.eConnCopy],
+				// ["eConn", data.nigeriaF.eConnData, ["Women","Men"], [0,3], staticData.eConnCopy],
 				//~ ["#lightEdu", data.nigeriaF.hhFEeduMOLightData, staticData.hhFEeduMOLightName, [0,1,3,2]],
 				//~ ["#cookEduMo", data.nigeriaF.hhMAeduCookData, staticData.hhMAeduCookName, [2,0]],
 				//~ ["light10kRoad", data.nigeriaF.hhBo10kRoadData, staticData.hhBo10kRoadName, [0,3], staticData.hhBo10kRoadCopy],
@@ -188,6 +190,8 @@ function initData() {
 			];
 			
 			staticData['dnutPearlNames'] = ['Overall', "Infrastructure 0", "Infrastructure 1", "Infrastructure 2", "Infrastructure 3", "Infrastructure 4"];
+
+			staticData['electricityByState'] = {"North Central":"48.7","FCT-Abuja":"77.7", "Federal Capital Territory":"77.7","Benue":"22.1","Kogi":"62.9","Kwara":"90.6","Nassarawa":"33.2","Niger":"51.7","Plateau":"36.3","North East":"29.3","Adamawa":"37.6","Bauchi":"29.3","Borno":"33.0","Gombe":"48.1","Taraba":"10.9","Yobe":"18.1","North West":"42.2","Jigawa":"26.0","Kaduna":"53.5","Kano":"52.1","Katsina":"31.3","Kebbi":"44.4","Sokoto":"38.9","Zamfara":"29.1","South East":"66.4","Abia":"81.7","Anambra":"88.1","Ebonyi":"39.2","Enugu":"55.4","Imo":"69.9","South South":"68.3","Akwa Ibom":"68.0","Bayelsa":"52.5","Cross River":"57.4","Delta":"78.3","Edo":"82.4","Rivers":"65.1","South West":"81.1","Ekiti":"92.7","Lagos":"99.3","Ogun":"72.0","Ondo":"66.3","Osun":"89.4","Oyo":"66.6"};
 	}
 }
 

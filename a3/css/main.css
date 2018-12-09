@@ -264,6 +264,10 @@ video::-webkit-media-controls {
 	text-align: left;
 }
 
+#sources a {
+	color: #F7C51B;
+}
+
 #mytooltip {
   font-size: 14px;
   color: white !important;

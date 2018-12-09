@@ -226,7 +226,7 @@ function mArkL0(cx, cy, r, width, color, value, idx) {
 				.endAngle(value * (PI/180) * 360)
 				)
 		.style('cursor', 'pointer')
-    .on('mouseover', function () { // Text Highlighting
+    .on('mouseover click', function () { // Text Highlighting
 			var idx = d3.select(this).attr('data-idx'); // ring index
 			d3.selectAll('.highlight' + idx)
 				.classed('highlight', true);
